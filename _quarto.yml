@@ -4,7 +4,7 @@ project:
 
 book:
   title: "Data Science for Political Science"
-  date: "September 2022"
+  date: "September 2023"
   chapters:
     - index.qmd
     - intro.qmd
