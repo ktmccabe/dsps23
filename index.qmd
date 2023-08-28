@@ -8,7 +8,7 @@ This document will include important links and course notes for 01:790:391:01: D
 -   This is a living document. If you spot errors or have questions or suggestions, please email me at k.mccabe\@rutgers.edu or post to the course Canvas site.
 -   Occasionally the notes are updated with embedded video explainers of portions of the code in different sections. These will be located in the playlist linked [here](https://youtube.com/playlist?list=PLx0unV_UpWcVWiQgq55YZxemiH7KrtPU-).
 
-In addition, the chat bot below can be used to ask questions about material included on lecture slides posted on Canvas.
+In addition, the chat bot below can be used to ask questions about material included on lecture slides posted on Canvas as well as the pdf version of this website, which can be accessed using the pdf icon in the top-left sidebar of this page.
 
 ```{=html}
 

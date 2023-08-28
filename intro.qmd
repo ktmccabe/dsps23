@@ -362,16 +362,16 @@ You can create these documents from scratch using the guidance in the previous s
 
 ***Assignment Exercises***
 
-1.  Create a .R script saved as "LastnameSetup1.R" (use your last name) "LastnameSetup1.Rmd". Within this file, make sure to title it and provide your name.
+1.  Create a .R script saved as "LastnameSetup1.R" (use your last name). Within this file, make sure to title it and provide your name.
     1.  Set your working directory, and include the file pathway (within `setwd()`) at the top of your .R script
     2.  Do the calculation 8 + 4 - 5 in your R script. Store it as an object with an informative name. Report the answer as a comment \# below the code.
     3.  Do the calculation 6 x 3 in your R script. Store it as an object with an informative name. Report the answer as a comment \# below the code.
     4.  Add these two calculations together. Note: do this by adding together the objects you created, not the underlying raw calculations. Report the answer as a \# below the code.
-2.  In this problem, we will just reformat what we did in the first problem in an R Markdown format. Create a .Rmd R Markdown file saved as "LastnameSetup1.Rmd." Within this file, make sure to title it and provide your name.
+2.  In this problem, we will just re-format what we did in the first problem in an R Markdown format. Create a .Rmd R Markdown file saved as "LastnameSetup1.Rmd." Within this file, make sure to title it and provide your name.
     1.  Create a Markdown heading \# Problem 2.1. Underneath this, create an R code chunk in which you do the calculation 8 + 4 - 5. Store it as an object with an informative name. Report the answer in plain language below the code chunk.
     2.  Create a Markdown heading \# Problem 2.2. Underneath this, create an R code chunk in which you do the calculation 6 x 3 in your R script. Store it as an object with an informative name. Report the answer in plain language below the code chunk.
     3.  Create a Markdown heading \# Problem 2.3. Underneath this, create an R code chunk in which you add the previous two calculations together. Note: do this by adding together the objects you created, not the underlying raw calculations. Report the answer in plain language below the code chunk.
     4.  Create a Markdown heading \# Problem 2.4. Write down how you will complete your R assignments this semester. For example, if you have a personal laptop with R and RStudio on it, you will simply write "I will use my personal laptop." If you don't have a personal computer or laptop, please indicate where on campus or off-campus you will have regular access to a computer with R/RStudio to do your work. It is ***essential*** that you have regular access to a computer so that you will not fall behind in this course.
-3.  Create a compile .html file by "knitting" the .Rmd file into a .html document. Save the file as "LastnameSetup1.html."
+3.  Create a compiled .html file by "knitting" the .Rmd file into a .html document. Save the file as "LastnameSetup1.html."
 
 All done! Submit the three documents on Canvas.
