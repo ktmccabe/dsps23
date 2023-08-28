@@ -356,9 +356,9 @@ We will start walking through this assignment together during class, but you are
 You will submit three documents on Canvas:
 
 -   An **R script** (.R) file with your code. Follow the best practices by titling your script and using \# comments to explain your steps. This code should be clean. I should be able to run your code to verify that the code produces the answers you write down.
--   An **.Rmd** **document** **and** a compiled RMarkdown **.html document** that you get after "knitting" the .Rmd file. This should also have a title including your name and use text or \# comments to explain your steps. This code should be clean. I should be able to run your code to verify that the code produces the answers you write down.
+-   An **.Rmd** **document** **and** a compiled RMarkdown **.html document** that you get after "knitting" the .Rmd file. This should also have a title including your name and use text or \# comments to explain your steps.
 
-You can create these documents from scratch using the guidance in the previous sections, or you can download and open these templates in RStudio: https://github.com/ktmccabe/dsps23/rtemplates.
+You can create these documents from scratch using the guidance in the previous sections, or you can download and open the .R and .Rmd templates, provided on Canvas,in RStudio to get started.
 
 ***Assignment Exercises***
 
