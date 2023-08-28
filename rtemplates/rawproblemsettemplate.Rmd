@@ -1,0 +1,60 @@
+---
+title: "Problem Set Number"
+author: "Your Name"
+date: "Enter the Due Date"
+output:
+  html_document: default
+---
+
+People you worked with on the assignment: Bob Smith, Joe Tilly
+
+
+***To compile the Markdown document into an html, click on the "Knit" icon in the toolbar at the top of your upper-left RStudio window..***
+
+
+```{r setup, include=FALSE}
+## Because include=FALSE, won't appear in your compiled document
+
+## This chunk sets global options for the full document, such as how big the figures should be
+knitr::opts_chunk$set(echo = TRUE,  fig.width = 5, fig.height = 4, fig.align = "center", tidy = TRUE)
+```
+
+
+
+***The text below gives you examples of how to format problem set code. You can edit to match your own needs. For example, in the initial assignment, I ask you to title the section Problem 2.1 instead of Problem 1.***
+
+# Problem 1
+
+As above, you can use the \# symbol to indicate a new section has started in your document: \# Problem 1, for example (See raw .Rmd file). If you use multiple \#\#, this will create a subsection.
+
+## Problem 1.1
+
+What makes R Markdown useful is that you can include code chunks in the document (see the raw .Rmd file).
+
+Example: Adding numbers.
+```{r}
+2 + 2
+```
+
+I can write the answer to this in plain language. Answer: 4.
+
+# Problem 2
+
+When you use Markdown for problem sets, please still include both the raw code and written answers, even if the answer may seem obvious within the code.
+```{r}
+sum53 <- 5 + 3
+sum53
+```
+
+Written answer: The answer to this is 8.
+
+
+# Problem 3
+Markdown will also print to the pdf the output of plots you create. For example, suppose an assignment asked you to make a histogram of a vector with numbers 10,20,30,40.
+```{r}
+hist(c(10, 20, 30, 40),
+     main = "Toy plot",
+     xlab = "Toy numbers")
+```
+
+
