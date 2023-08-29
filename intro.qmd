@@ -25,6 +25,11 @@ Researchers used modern data sources, including mobile phone data, as a way to *
 
 ![](images/blum.jpg){width="90%"}
 
+[Steele et al. 2017](https://royalsocietypublishing.org/doi/10.1098/rsif.2016.0690): "Poverty is one of the most important determinants of adverse health outcomes globally, a major cause of societal instability and one of the largest causes of lost human potential. Traditional approaches to measuring and targeting poverty rely heavily on census data, which in most low- and middle-income countries (LMICs) are unavailable or out-of-date. Alternat emeasures are needed to complement and update estimates between censuses. This study demonstrates how public and private data sources that are commonly available for LMICs can be used to provide novel insight into the spatial distribution of poverty.We evaluate the relative value of modelling three traditional poverty measures using aggregate data from mobile operators and widely available geospatial data."
+
+
+### Course Goals
+
 ***Social Science Goals***
 
 We have several goals in social science. Here are four that data science can help us pursue:
@@ -41,8 +46,6 @@ We have several goals in social science. Here are four that data science can hel
 What are other examples of these goals?
 
 Note: In this course, we are exploiting the benefits of quantitative data to help achieve goals of social science. However, quantitative data have their shortcomings, too. We will also discuss the limitations of various applications of social science data, and we encourage you to always think critically about how we are using data.
-
-### Course Goals
 
 This course will provide you with a taste of each of these social science goals, and how the use of data can help achieve these goals. By the end of the course, you should be able to
 
@@ -299,6 +302,8 @@ We say this is a "compiled" RMarkdown document because it differs from the raw v
 
 Just like with a regular R script, to work in R Markdown, you will open up RStudio.
 
+-   For additional support beyond the notes below, you can also follow the materials provided by RStudio for getting started with R Markdown https://rmarkdown.rstudio.com/lesson-1.html.
+
 The **first time** you will be working in R Markdown, you will want to install two packages: `rmarkdown` and `knitr`. You can do this in the Console window in RStudio (remember the lower-left window!).
 
 Type the following into the Console window and hit enter/return.
@@ -358,7 +363,7 @@ You will submit three documents on Canvas:
 -   An **R script** (.R) file with your code. Follow the best practices by titling your script and using \# comments to explain your steps. This code should be clean. I should be able to run your code to verify that the code produces the answers you write down.
 -   An **.Rmd** **document** **and** a compiled RMarkdown **.html document** that you get after "knitting" the .Rmd file. This should also have a title including your name and use text or \# comments to explain your steps.
 
-You can create these documents from scratch using the guidance in the previous sections, or you can download and open the .R and .Rmd templates, provided on Canvas,in RStudio to get started.
+You can create these documents from scratch using the guidance in the previous sections, or you can download and open the .R and .Rmd templates, provided on Canvas, in RStudio to get started.
 
 ***Assignment Exercises***
 
