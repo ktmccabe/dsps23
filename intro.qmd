@@ -27,7 +27,6 @@ Researchers used modern data sources, including mobile phone data, as a way to *
 
 [Steele et al. 2017](https://royalsocietypublishing.org/doi/10.1098/rsif.2016.0690): "Poverty is one of the most important determinants of adverse health outcomes globally, a major cause of societal instability and one of the largest causes of lost human potential. Traditional approaches to measuring and targeting poverty rely heavily on census data, which in most low- and middle-income countries (LMICs) are unavailable or out-of-date. Alternat emeasures are needed to complement and update estimates between censuses. This study demonstrates how public and private data sources that are commonly available for LMICs can be used to provide novel insight into the spatial distribution of poverty.We evaluate the relative value of modelling three traditional poverty measures using aggregate data from mobile operators and widely available geospatial data."
 
-
 ### Course Goals
 
 ***Social Science Goals***
@@ -363,7 +362,9 @@ You will submit three documents on Canvas:
 -   An **R script** (.R) file with your code. Follow the best practices by titling your script and using \# comments to explain your steps. This code should be clean. I should be able to run your code to verify that the code produces the answers you write down.
 -   An **.Rmd** **document** **and** a compiled RMarkdown **.html document** that you get after "knitting" the .Rmd file. This should also have a title including your name and use text or \# comments to explain your steps.
 
-You can create these documents from scratch using the guidance in the previous sections, or you can download and open the .R and .Rmd templates, provided on Canvas, in RStudio to get started.
+You can create these documents from scratch using the guidance in the previous sections, or you can download and open the .R and .Rmd templates, provided on Canvas, in RStudio to get started. This video provides a brief overview of opening an R script and R Markdown file in RStudio. The notes provide additional details.
+
+{{< video src="https://www.youtube.com/watch?v=g37_-icdPMc" >}}
 
 ***Assignment Exercises***
 
