@@ -208,7 +208,7 @@ barplot(condmeans,
 dev.off()
 ```
 
-Alternatively, you can save it as an image, by going to the plot window in your RStudio environment, and clicking on Export -> Save as Image. Here, you can save it in any file format you would like, as well as change the dimensions.
+Alternatively, you can save it as an image, by going to the plot window in your RStudio environment, and clicking on Export -\> Save as Image. Here, you can save it in any file format you would like, as well as change the dimensions.
 
 ![](images/saveplot.png)
 
@@ -431,7 +431,6 @@ Range of Correlation is between $-1$ and $1$
 
 ![From *R for Dummies*](images/corrdummies.png){width="60%"}
 
-
 The `plot()` function in R works using x and y coordinates.
 
 -   We have to tell R precisely at which x- and y- coordinates to place points (e.g., place a point at `x=20` and `y=40`)
@@ -545,12 +544,11 @@ plot(x=1:4,
 axis(1, at=1:4, labels = years) # label points only at relevant ticks
 ```
 
-The two vectors of values may come from variables in your data or may come from calculations you make using those variables. 
+The two vectors of values may come from variables in your data or may come from calculations you make using those variables.
 
 Let's do a more complex example and break this down step by step.
 
 ## Application: Trends during COVID
-
 
 Since the onset of the pandemic in 2020, researchers have evaluated attitudinal and behavioral responses to policy changes, political messages, and COVID case/hospitalization/death rates.
 
@@ -614,13 +612,13 @@ The researchers continue to add to these data. Let's look at the portion of data
 covidsub <- subset(covid, Dates >= as.Date("2019-01-01") &
                      Dates <= as.Date("2022-04-25"))
 ```
+
 These data are collected by week. That is very detailed. While that may be useful, let us create another variable that contains just the month and year, which will allow us to calculate the average per month. With a date variable, we can use the `format` function to change the format to just year and month.
 
 ```{r}
 covidsub$monthyear <- format(covidsub$Dates, "%Y-%m")
 range(covidsub$monthyear)
 ```
-
 
 Where we are going ...
 
@@ -732,6 +730,7 @@ lines(x=1:length(mobilitybymonthSO),
 Let's create our own axis for the plot to add detail. To do this, we add `xaxt` to the `plot` function and then use `axis()` below the function.
 
 The labels we will add are the actual months in the data. These happen to be the labels or `names` of our vectors:
+
 ```{r}
 names(mobilitybymonthNE)
 ```
@@ -855,6 +854,7 @@ Let's examine social mobility just before vs. just after the federal announcemen
     -   Note we use `abline(v=)` to indicate a vertical line at a location to cross the x-axis
 
 This is the 15th entry in our vector, which means at point 15 on the x-axis.
+
 ```{r}
 mobilitybymonthNE["2020-03"]
 mobilitybymonthNE[15]

@@ -220,6 +220,30 @@ Option 1: Download dataset to your computer
 turnout <- read.csv("turnout.csv")
 ```
 
+
+<details>
+
+<summary>Click here for an alternative function for csv files.</summary>
+
+Some scholars prefer to use the function `read_csv` to load csv data. It is better at handling more complicated types of data. We will not need to use this function in this course, but you may encounter it elsewhere.
+
+To use this function, the first time we will go about using it, we have to first install a "package" called `readr`. Packages in R give us additional tools beyond what the base version of R provides. It is like installing an extra app on your phone.
+
+```{r, eval=FALSE}
+install.packages("readr")
+```
+
+Once we have that installed, now anytime we want to use the function, we will call (open) the "readr" package using `library()`, and then the syntax is just like using the `read.csv` function. 
+
+```{r, eval=FAlSE}
+library(readr)
+turnout <- read_csv("turnout.csv")
+
+```
+
+
+</details>
+
 Option 2: Read file from a url provided
 
 -   Need an active internet connection for this to work

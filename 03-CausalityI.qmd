@@ -103,7 +103,7 @@ What makes the evaluation of causal claims difficult, is that in the real world,
 -   For any individual, we only get to see (observe) the result from one state of the world
     -   This makes that subtraction of potential outcomes impossible.
 
-(Unless we are in [Groundhog Day](https://www.youtube.com/watch?v=5E0M6Rh9qpg) or *Russian Doll*)
+(Unless we are in [Groundhog Day](https://www.youtube.com/watch?v=5E0M6Rh9qpg) 
 
 ## Randomized Controlled Trials
 
@@ -125,7 +125,7 @@ Randomization is essential for being able to *identify* and *isolate* the causal
 
 Without randomization, there may be several reasons why two groups differ beyond the treatment of interest.
 
--   For example, if we randomly assigned half of Rutgers seniors to watch the movie *Top Gun Maverick* and half to watch *Minions: The Rise of Gru* we would expect the groups to have about equal proportions of female students, average age, racial composition, majors, etc.
+-   For example, if we randomly assigned half of Rutgers seniors to watch the movie *Oppenheimer* and half to watch *Barbie* we would expect the groups to have about equal proportions of female students, average age, racial composition, majors, etc.
     -   (If we didn't randomly assign, and just let people "select" into watching a particular movie, the groups could look very different.)
 
 But because we randomized assignment, on average, we'd expect the two groups to be identical except for the treatment-- in this case, which movie they watched.
@@ -272,15 +272,6 @@ We can also use the `table` command to show a crosstabulation: a table that disp
 table(calledback = resume$call, race = resume$race)
 ```
 
-Sometimes we will want to show the proportion instead of the frequency using `prop.table`
-
-```{r}
-## Example: proportion black vs. white sounding resumes by call backs
-## Convert to proportion
-prop.table(table(calledback = resume$call, race = resume$race), margin = 2) # 1 for row sum, 2 for col
-```
-
-***How can we interpret this crosstabulation? It should let us see the causal effect-- the callback rate for each group***
 
 ## Conditional Means
 
@@ -471,7 +462,6 @@ Example: A/B Testing in Campaigns
 
 Emails are virtually costless. Very easy to ask: Are people more likely to open them with X subject or Y subject or Z subject?
 
-
 ## Wrapping Up Causation with Experiments
 
 In this section, we have discussed what it means to make a causal claim, why it is essentially impossible to make causal comparisons in real life due to the fundamental problem of causal inferences, and how experiments can help us make comparisons that approximate our causal ideals.
@@ -482,28 +472,14 @@ In the next section, we start to examine how to visualize data.
 
 Here are some of the R tools we used in this section:
 
-  - `table()`: this function summarizes the frequency of observations that take a particular value. The input is one or more variables in your data.
-      + E.g., `table(resume$sex)` or `table(resume$sex, resume$call)`
-  - `prop.table`: this function wraps around a `table()` function and converts the table from a set of frequencies to proportions.
-      + E.g.,  `prop.table(table(resume$sex, resume$call))`
-      + You can add an argument `margin = 2` or `margin = 1` such that the proportions in a given column (or row) sum up to 1. We did this to more easily calculate the callback rate for black vs. white applicants.
-  - `tapply()`: this function applies a given operation like `mean` to whichever variable is in the first position, separately or "conditionally" by different values of the variable in the second "index" position.
-      + E.g., `tapply(resume$call, INDEX=resume$race, mean)` finds the average callbacks for applicants separately for different races of applicants in the data.
-  - `== > < >= <= !=`: Relational operators help us set up "logical statements" in R that are evaluated as `TRUE` or `FALSE`
-      + E.g., `resume$race == "black"` evaluates whether for each observation in the race column is "black" in which case the statement is `TRUE` or not black, in which case the statement is `FALSE`
-      + E.g., `resume$call < 1` evaluates whether for each observation in the call column has a value less than one in which case the statement is `TRUE` or not less than 1, in which case the statement is `FALSE`
-      + We can then isolate certain parts of columns using relational operators and the brackets `[]`. For example we can take the mean callbacks for applicants who are black using `mean(resume$call[resume$race == "black"])`
-  - `&` and `|`: These are boolean operators that allow us to combine multiple relational operators using an AND statement (`&`) or an OR statement `|`. Note the bar is a bar that is usually above your backslash key and not a capitalized i.
-      + E.g., `mean(resume$call[resume$race == "black" & resume$sex == "female"])`
-  - `subset()`: We can subset whole rows of our data using this function. It takes two inputs-- the first is the name of the original dataframe, and the second is a relational statement. Usually we store this output in R by assigning the results to a new object, a dataframe that contains only those rows for which the logical statement using the relational operators is true.
-      E.g., `females <- subset(resume, sex == "female")` subsets our data to keep only those rows where applicants were female.
-
-
-      
-
-
-    
-  
-  
-
-
+-   `table()`: this function summarizes the frequency of observations that take a particular value. The input is one or more variables in your data.
+    -   E.g., `table(resume$sex)` or `table(resume$sex, resume$call)`
+-   `tapply()`: this function applies a given operation like `mean` to whichever variable is in the first position, separately or "conditionally" by different values of the variable in the second "index" position.
+    -   E.g., `tapply(resume$call, INDEX=resume$race, mean)` finds the average callbacks for applicants separately for different races of applicants in the data.
+-   `== > < >= <= !=`: Relational operators help us set up "logical statements" in R that are evaluated as `TRUE` or `FALSE`
+    -   E.g., `resume$race == "black"` evaluates whether for each observation in the race column is "black" in which case the statement is `TRUE` or not black, in which case the statement is `FALSE`
+    -   E.g., `resume$call < 1` evaluates whether for each observation in the call column has a value less than one in which case the statement is `TRUE` or not less than 1, in which case the statement is `FALSE`
+    -   We can then isolate certain parts of columns using relational operators and the brackets `[]`. For example we can take the mean callbacks for applicants who are black using `mean(resume$call[resume$race == "black"])`
+-   `&` and `|`: These are boolean operators that allow us to combine multiple relational operators using an AND statement (`&`) or an OR statement `|`. Note the bar is a bar that is usually above your backslash key and not a capitalized i.
+    -   E.g., `mean(resume$call[resume$race == "black" & resume$sex == "female"])`
+-   `subset()`: We can subset whole rows of our data using this function. It takes two inputs-- the first is the name of the original dataframe, and the second is a relational statement. Usually we store this output in R by assigning the results to a new object, a dataframe that contains only those rows for which the logical statement using the relational operators is true. E.g., `females <- subset(resume, sex == "female")` subsets our data to keep only those rows where applicants were female.
