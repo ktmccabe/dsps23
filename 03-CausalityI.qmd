@@ -30,15 +30,15 @@ Causal Question: Does the manipulation of one factor (the treatment), (holding e
 
 When studying causal relationships, we distinguish two concepts:
 
--   treatment: variable whose change may produce a change in the outcome
--   outcome ($Y$): what may change as a result
+-   treatment: variable whose change may produce a change in the outcome (e.g., watching vs. not watching *Duck Dynasty*)
+-   outcome ($Y$): what may change as a result (e.g., their support for Trump)
 
 We imagine two states of the world or "potential outcomes."
 
--   $Y(1)$: the outcome if the treatment is administered
--   $Y(0)$: the outcome if the treatment is NOT administered (or maybe something else is)
+-   $Y(1)$: the outcome if the treatment is administered (e.g., watching the show)
+-   $Y(0)$: the outcome if the treatment is NOT administered or maybe something else is (e.g., not watching the show)
 
-Example: How does voter turnout ($Y$) change as a result of varying whether someone receives a mail-in ballot (the treatment)?
+Political Science Example: How does voter turnout ($Y$) change as a result of varying whether someone receives a mail-in ballot (the treatment)?
 
 -   $Y(\text{sent a mail-in ballot})$: do you vote or not
 -   $Y(\text{not sent a mail-in ballot})$: do you vote or not
@@ -105,7 +105,7 @@ What makes the evaluation of causal claims difficult, is that in the real world,
 -   For any individual, we only get to see (observe) the result from one state of the world
     -   This makes that subtraction of potential outcomes impossible.
 
-(Unless we are in [Groundhog Day](https://www.youtube.com/watch?v=5E0M6Rh9qpg) 
+(Unless we are in [Groundhog Day](https://www.youtube.com/watch?v=5E0M6Rh9qpg)
 
 ## Randomized Controlled Trials
 
@@ -274,16 +274,29 @@ We can also use the `table` command to show a crosstabulation: a table that disp
 table(calledback = resume$call, race = resume$race)
 ```
 
-
 ## Conditional Means
 
-Another thing we can do with factor variables is to find how the average of one variable (e.g., our outcome- the callback rate) varies across different categories of our factor variable. For this, we use `tapply()`.
+Recall how to take a mean of a variable in our data. For example, let's take the mean of the variable `call`.
+
+```{r}
+mean(resume$call)
+```
+
+This gives us the average callbacks (or callback rate) for everyone in our data. In experiments, we want to take the mean for a specific group within our data-- the treatment group, and then the mean for the control group.
+
+Somehow, we have to identify, within our data, which rows were part of the treatment group and which were a part of the control group. In this study, we want to identify resumes with an assigned name perceived to be black vs. perceived to be white. This is in our `race` variable.
+
+We will cover a couple of tools to do this, with the first being `tapply`.
+
+To find how the average of one variable (e.g., our outcome- the callback rate) varies across different categories of our factor variable, we use `tapply()`.
 
 ```{r}
 ## take the mean of input1 by categories of input2
-## mean of call by race
+## mean of the call variable conducted separately by race
 tapply(resume$call, INDEX=resume$race, mean)
 ```
+
+This tells us the callback rate for each group of people in our data. That's not the only way to do this, however. We can also use the tools below.
 
 ## Relational Operators in R
 

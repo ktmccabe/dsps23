@@ -262,15 +262,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="potential-outcomes-framework"><span class="header-section-number">3.1.1</span> Potential Outcomes Framework</h3>
 <p>When studying causal relationships, we distinguish two concepts:</p>
 <ul>
-<li>treatment: variable whose change may produce a change in the outcome</li>
-<li>outcome (<span class="math inline">\(Y\)</span>): what may change as a result</li>
+<li>treatment: variable whose change may produce a change in the outcome (e.g., watching vs.&nbsp;not watching <em>Duck Dynasty</em>)</li>
+<li>outcome (<span class="math inline">\(Y\)</span>): what may change as a result (e.g., their support for Trump)</li>
 </ul>
 <p>We imagine two states of the world or “potential outcomes.”</p>
 <ul>
-<li><span class="math inline">\(Y(1)\)</span>: the outcome if the treatment is administered</li>
-<li><span class="math inline">\(Y(0)\)</span>: the outcome if the treatment is NOT administered (or maybe something else is)</li>
+<li><span class="math inline">\(Y(1)\)</span>: the outcome if the treatment is administered (e.g., watching the show)</li>
+<li><span class="math inline">\(Y(0)\)</span>: the outcome if the treatment is NOT administered or maybe something else is (e.g., not watching the show)</li>
 </ul>
-<p>Example: How does voter turnout (<span class="math inline">\(Y\)</span>) change as a result of varying whether someone receives a mail-in ballot (the treatment)?</p>
+<p>Political Science Example: How does voter turnout (<span class="math inline">\(Y\)</span>) change as a result of varying whether someone receives a mail-in ballot (the treatment)?</p>
 <ul>
 <li><span class="math inline">\(Y(\text{sent a mail-in ballot})\)</span>: do you vote or not</li>
 <li><span class="math inline">\(Y(\text{not sent a mail-in ballot})\)</span>: do you vote or not</li>
@@ -550,16 +550,27 @@ calledback black white
 </section>
 <section id="conditional-means" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="conditional-means"><span class="header-section-number">3.5</span> Conditional Means</h2>
-<p>Another thing we can do with factor variables is to find how the average of one variable (e.g., our outcome- the callback rate) varies across different categories of our factor variable. For this, we use <code>tapply()</code>.</p>
+<p>Recall how to take a mean of a variable in our data. For example, let’s take the mean of the variable <code>call</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## take the mean of input1 by categories of input2</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="do">## mean of call by race</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(resume<span class="sc">$</span>call, <span class="at">INDEX=</span>resume<span class="sc">$</span>race, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resume<span class="sc">$</span>call)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08049281</code></pre>
+</div>
+</div>
+<p>This gives us the average callbacks (or callback rate) for everyone in our data. In experiments, we want to take the mean for a specific group within our data– the treatment group, and then the mean for the control group.</p>
+<p>Somehow, we have to identify, within our data, which rows were part of the treatment group and which were a part of the control group. In this study, we want to identify resumes with an assigned name perceived to be black vs.&nbsp;perceived to be white. This is in our <code>race</code> variable.</p>
+<p>We will cover a couple of tools to do this, with the first being <code>tapply</code>.</p>
+<p>To find how the average of one variable (e.g., our outcome- the callback rate) varies across different categories of our factor variable, we use <code>tapply()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## take the mean of input1 by categories of input2</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="do">## mean of the call variable conducted separately by race</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(resume<span class="sc">$</span>call, <span class="at">INDEX=</span>resume<span class="sc">$</span>race, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     black      white 
 0.06447639 0.09650924 </code></pre>
 </div>
 </div>
+<p>This tells us the callback rate for each group of people in our data. That’s not the only way to do this, however. We can also use the tools below.</p>
 </section>
 <section id="relational-operators-in-r" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="relational-operators-in-r"><span class="header-section-number">3.6</span> Relational Operators in R</h2>
@@ -570,12 +581,12 @@ calledback black white
 <li>We have a statement and R evaluates it as <code>TRUE</code> or <code>FALSE</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## for each observation, does the value of race equal "black"?</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## for each observation, does the value of race equal "black"?</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>By putting this logical statement within <code>[ ]</code>, we are asking R to take the <code>mean()</code> of the variable <code>resume$call</code> for the subset of observations for which this logical statement is <code>TRUE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06447639</code></pre>
 </div>
@@ -583,9 +594,9 @@ calledback black white
 <p>Ultimately, each of these paths has led us to a place where we can estimate the average treatment effect by calculation the difference in means: the difference in callback rates for black and white applicants.</p>
 <p>We said the ATE = <span class="math inline">\(\bar{Y}(treatment) - \bar{Y}(control)\)</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ate <span class="ot">&lt;-</span> <span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>]) <span class="sc">-</span> </span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>])</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>ate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>ate <span class="ot">&lt;-</span> <span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>]) <span class="sc">-</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>])</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>ate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.03203285</code></pre>
 </div>
@@ -601,17 +612,17 @@ calledback black white
 <li>Below are two approaches for this subsetting, one that uses brackets and one that uses the <code>subset</code> function</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## option one</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>females <span class="ot">&lt;-</span> resume[resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span>, ]</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">## option two using subset()- preferred</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>females <span class="ot">&lt;-</span> <span class="fu">subset</span>(resume, sex <span class="sc">==</span> <span class="st">"female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## option one</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>females <span class="ot">&lt;-</span> resume[resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span>, ]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">## option two using subset()- preferred</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>females <span class="ot">&lt;-</span> <span class="fu">subset</span>(resume, sex <span class="sc">==</span> <span class="st">"female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that we have subset the data, this simplifies estimating the ATE for female applicants only.</p>
 <p>We said the ATE = <span class="math inline">\(\bar{Y}(treatment) - \bar{Y}(control)\)</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ate.females <span class="ot">&lt;-</span> <span class="fu">mean</span>(females<span class="sc">$</span>call[females<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>]) <span class="sc">-</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(females<span class="sc">$</span>call[females<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>])</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>ate.females</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ate.females <span class="ot">&lt;-</span> <span class="fu">mean</span>(females<span class="sc">$</span>call[females<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>]) <span class="sc">-</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(females<span class="sc">$</span>call[females<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>])</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>ate.females</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.03264689</code></pre>
 </div>
@@ -623,11 +634,11 @@ calledback black white
 <li>R allows use to use <code>&amp;</code> (and) and <code>|</code> (or)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>femaleblack <span class="ot">&lt;-</span> <span class="fu">subset</span>(resume, sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span> race <span class="sc">==</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>femaleblack <span class="ot">&lt;-</span> <span class="fu">subset</span>(resume, sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span> race <span class="sc">==</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We could now find the callback rate for Black females using the tools from above:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(femaleblack<span class="sc">$</span>call)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(femaleblack<span class="sc">$</span>call)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06627784</code></pre>
 </div>
@@ -638,16 +649,16 @@ calledback black white
 <h2 data-number="3.8" class="anchored" data-anchor-id="creating-new-variables-using-conditional-statements"><span class="header-section-number">3.8</span> Creating New Variables using Conditional statements</h2>
 <p>We can instead create a new variable in our main dataframe. Let’s make a variable that takes the value 1 if a name is female and black sounding and 0, otherwise</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a new variable called femaleblackname</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a 1 to our new variable where sex is female and race is black</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname[resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span> resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a 0 if sex is not female OR if race is not black</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname[resume<span class="sc">$</span>sex <span class="sc">!=</span> <span class="st">"female"</span> <span class="sc">|</span> resume<span class="sc">$</span>race <span class="sc">!=</span> <span class="st">"black"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a new variable called femaleblackname</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a 1 to our new variable where sex is female and race is black</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname[resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span> resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a 0 if sex is not female OR if race is not black</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname[resume<span class="sc">$</span>sex <span class="sc">!=</span> <span class="st">"female"</span> <span class="sc">|</span> resume<span class="sc">$</span>race <span class="sc">!=</span> <span class="st">"black"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can check our work</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">name =</span> resume<span class="sc">$</span>firstname, <span class="at">femaleblack =</span> resume<span class="sc">$</span>femaleblackname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">name =</span> resume<span class="sc">$</span>firstname, <span class="at">femaleblack =</span> resume<span class="sc">$</span>femaleblackname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          femaleblack
 name         0   1
@@ -691,11 +702,11 @@ name         0   1
 </div>
 <p>Let’s say we wanted to know the callback rates for just female black (sounding) names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(femaleblack<span class="sc">$</span>call)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(femaleblack<span class="sc">$</span>call)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06627784</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>femaleblackname <span class="sc">==</span> <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>femaleblackname <span class="sc">==</span> <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06627784</code></pre>
 </div>
@@ -708,8 +719,8 @@ name         0   1
 <li>Can be read: If this relational statement is <code>TRUE</code>, I assign you A, otherwise I assign you B</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>femaleblackname <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Can be read: If sex is female and race is black, give the observation in the new variable a 1, otherwise give it a 0.</p>
 <p>Like most things, we can also get more complicated here. Let’s say we wanted to create a variable that indicated both race and sex.</p>
@@ -720,12 +731,12 @@ name         0   1
 <li>Otherwise I assign you D</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>racesex <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>, <span class="st">"FemaleBlack"</span>, </span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>, <span class="st">"FemaleWhite"</span>,</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span> <span class="sc">&amp;</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>, <span class="st">"MaleWhite"</span>, <span class="st">"MaleBlack"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>resume<span class="sc">$</span>racesex <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"black"</span>, <span class="st">"FemaleBlack"</span>, </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">&amp;</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>, <span class="st">"FemaleWhite"</span>,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">ifelse</span>(resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span> <span class="sc">&amp;</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>                                   resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">"white"</span>, <span class="st">"MaleWhite"</span>, <span class="st">"MaleBlack"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note: what you assign can be numeric or text.</p>
 </section>
