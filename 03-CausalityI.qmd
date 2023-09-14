@@ -94,6 +94,8 @@ We often want to know the **average treatment effect** in some population, not j
 -   $\frac{1}{N} \sum_{i=1}^N (Y_i (1)-Y_i (0))$ = "average treatment effect" (ATE)
     -   e.g., Average donations if contacted - Average donations if not contacted
 
+Note: If the math above is helpful, you can use it. If it is difficult to read, focus on the plain language definitions that go before it. The notation here is less important than the conceptual understanding.
+
 ### Fundamental Problem of Causal Inference
 
 The problem: Fundamental Problem of Causal Inference

@@ -220,7 +220,6 @@ Option 1: Download dataset to your computer
 turnout <- read.csv("turnout.csv")
 ```
 
-
 <details>
 
 <summary>Click here for an alternative function for csv files.</summary>
@@ -233,14 +232,13 @@ To use this function, the first time we will go about using it, we have to first
 install.packages("readr")
 ```
 
-Once we have that installed, now anytime we want to use the function, we will call (open) the "readr" package using `library()`, and then the syntax is just like using the `read.csv` function. 
+Once we have that installed, now anytime we want to use the function, we will call (open) the "readr" package using `library()`, and then the syntax is just like using the `read.csv` function.
 
-```{r, eval=FAlSE}
+```{r, eval=FALSE}
 library(readr)
 turnout <- read_csv("turnout.csv")
 
 ```
-
 
 </details>
 

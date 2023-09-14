@@ -1,0 +1,34 @@
+---
+title: "Problem Set 1"
+author: "Prof. McCabe"
+date: "2023-09-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Problem 2.1
+
+We can write anything we want.
+
+```{r}
+sum855 <- 8+55
+sum855
+```
+
+I can write any text.
+
+## Problem 2.2
+
+```{r}
+7-4
+```
+
+
+
+
+
+

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>causalityi</title>
+<title>Data Science for Political Science - 3&nbsp; Causation with Experiments</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,32 +57,177 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="03-CausalityI_files/libs/clipboard/clipboard.min.js"></script>
-<script src="03-CausalityI_files/libs/quarto-html/quarto.js"></script>
-<script src="03-CausalityI_files/libs/quarto-html/popper.min.js"></script>
-<script src="03-CausalityI_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="03-CausalityI_files/libs/quarto-html/anchor.min.js"></script>
-<link href="03-CausalityI_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="03-CausalityI_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="03-CausalityI_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="03-CausalityI_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="03-CausalityI_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02-Description.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar docked">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-CausalityI.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causation with Experiments</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Political Science</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Data-Science-for-Political-Science.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Description</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-CausalityI.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causation with Experiments</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Section Contents</h2>
+   
+  <ul>
+  <li><a href="#what-separates-causation-from-correlation" id="toc-what-separates-causation-from-correlation" class="nav-link active" data-scroll-target="#what-separates-causation-from-correlation"><span class="header-section-number">3.1</span> What separates causation from correlation?</a>
+  <ul>
+  <li><a href="#potential-outcomes-framework" id="toc-potential-outcomes-framework" class="nav-link" data-scroll-target="#potential-outcomes-framework"><span class="header-section-number">3.1.1</span> Potential Outcomes Framework</a></li>
+  <li><a href="#causal-effects" id="toc-causal-effects" class="nav-link" data-scroll-target="#causal-effects"><span class="header-section-number">3.1.2</span> Causal Effects</a></li>
+  <li><a href="#fundamental-problem-of-causal-inference" id="toc-fundamental-problem-of-causal-inference" class="nav-link" data-scroll-target="#fundamental-problem-of-causal-inference"><span class="header-section-number">3.1.3</span> Fundamental Problem of Causal Inference</a></li>
+  </ul></li>
+  <li><a href="#randomized-controlled-trials" id="toc-randomized-controlled-trials" class="nav-link" data-scroll-target="#randomized-controlled-trials"><span class="header-section-number">3.2</span> Randomized Controlled Trials</a>
+  <ul>
+  <li><a href="#experiments-why-randomize" id="toc-experiments-why-randomize" class="nav-link" data-scroll-target="#experiments-why-randomize"><span class="header-section-number">3.2.1</span> Experiments: Why Randomize?</a></li>
+  <li><a href="#experiments-how-to-analyze" id="toc-experiments-how-to-analyze" class="nav-link" data-scroll-target="#experiments-how-to-analyze"><span class="header-section-number">3.2.2</span> Experiments: How to Analyze</a></li>
+  <li><a href="#ingredients-of-an-experiment" id="toc-ingredients-of-an-experiment" class="nav-link" data-scroll-target="#ingredients-of-an-experiment"><span class="header-section-number">3.2.3</span> Ingredients of an Experiment</a></li>
+  </ul></li>
+  <li><a href="#application-is-there-racial-discrimination-in-the-labor-market" id="toc-application-is-there-racial-discrimination-in-the-labor-market" class="nav-link" data-scroll-target="#application-is-there-racial-discrimination-in-the-labor-market"><span class="header-section-number">3.3</span> Application: Is there racial discrimination in the labor market?</a>
+  <ul>
+  <li><a href="#variable-classes" id="toc-variable-classes" class="nav-link" data-scroll-target="#variable-classes"><span class="header-section-number">3.3.1</span> Variable classes</a></li>
+  </ul></li>
+  <li><a href="#making-tables" id="toc-making-tables" class="nav-link" data-scroll-target="#making-tables"><span class="header-section-number">3.4</span> Making tables</a>
+  <ul>
+  <li><a href="#crosstabulation" id="toc-crosstabulation" class="nav-link" data-scroll-target="#crosstabulation"><span class="header-section-number">3.4.1</span> Crosstabulation</a></li>
+  </ul></li>
+  <li><a href="#conditional-means" id="toc-conditional-means" class="nav-link" data-scroll-target="#conditional-means"><span class="header-section-number">3.5</span> Conditional Means</a></li>
+  <li><a href="#relational-operators-in-r" id="toc-relational-operators-in-r" class="nav-link" data-scroll-target="#relational-operators-in-r"><span class="header-section-number">3.6</span> Relational Operators in R</a></li>
+  <li><a href="#subsetting-data-in-r" id="toc-subsetting-data-in-r" class="nav-link" data-scroll-target="#subsetting-data-in-r"><span class="header-section-number">3.7</span> Subsetting data in R</a>
+  <ul>
+  <li><a href="#getting-booooooooolean" id="toc-getting-booooooooolean" class="nav-link" data-scroll-target="#getting-booooooooolean"><span class="header-section-number">3.7.1</span> Getting Booooooooolean</a></li>
+  </ul></li>
+  <li><a href="#creating-new-variables-using-conditional-statements" id="toc-creating-new-variables-using-conditional-statements" class="nav-link" data-scroll-target="#creating-new-variables-using-conditional-statements"><span class="header-section-number">3.8</span> Creating New Variables using Conditional statements</a>
+  <ul>
+  <li><a href="#ifelse-statements" id="toc-ifelse-statements" class="nav-link" data-scroll-target="#ifelse-statements"><span class="header-section-number">3.8.1</span> ifelse statements</a></li>
+  </ul></li>
+  <li><a href="#types-of-experiments" id="toc-types-of-experiments" class="nav-link" data-scroll-target="#types-of-experiments"><span class="header-section-number">3.9</span> Types of Experiments</a></li>
+  <li><a href="#wrapping-up-causation-with-experiments" id="toc-wrapping-up-causation-with-experiments" class="nav-link" data-scroll-target="#wrapping-up-causation-with-experiments"><span class="header-section-number">3.10</span> Wrapping Up Causation with Experiments</a>
+  <ul>
+  <li><a href="#summary-of-r-tools-in-this-section" id="toc-summary-of-r-tools-in-this-section" class="nav-link" data-scroll-target="#summary-of-r-tools-in-this-section"><span class="header-section-number">3.10.1</span> Summary of R tools in this section</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="causation1" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causation with Experiments</span></span></h1>
+</div>
 
 
-<section id="causation1" class="level1">
-<h1>Causation with Experiments</h1>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
 <p>Recall that we said, four primary goals of social science include:</p>
 <ul>
 <li><strong>Describe</strong> and measure
@@ -103,8 +248,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <p>In this section, we start to explore the goal of explanation–making causal claims.</p>
-<section id="what-separates-causation-from-correlation" class="level2">
-<h2 class="anchored" data-anchor-id="what-separates-causation-from-correlation">What separates causation from correlation?</h2>
+<section id="what-separates-causation-from-correlation" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="what-separates-causation-from-correlation"><span class="header-section-number">3.1</span> What separates causation from correlation?</h2>
 <p>Here’s an example. In 2016, researchers at the <a href="https://www.nytimes.com/interactive/2016/12/26/upshot/duck-dynasty-vs-modern-family-television-maps.html">NY Times</a> noticed that areas in the country where the television show <em>Duck Dynasty</em> was popular also tended to support Donald Trump at higher rates.</p>
 <p><img src="images/duckdynasty.png" class="img-fluid"></p>
 <p>If we put our social scientist hat on, we might want to distinguish whether this is a causal or, more likely, just a correlational relationship:</p>
@@ -113,8 +258,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Causality: Watching Duck Dynasty (vs.&nbsp;not watching) increases your support of Trump.</li>
 </ul>
 <p>Causal Question: Does the manipulation of one factor (the treatment), (holding everything else constant), cause a change in an outcome?</p>
-<section id="potential-outcomes-framework" class="level3">
-<h3 class="anchored" data-anchor-id="potential-outcomes-framework">Potential Outcomes Framework</h3>
+<section id="potential-outcomes-framework" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="potential-outcomes-framework"><span class="header-section-number">3.1.1</span> Potential Outcomes Framework</h3>
 <p>When studying causal relationships, we distinguish two concepts:</p>
 <ul>
 <li>treatment: variable whose change may produce a change in the outcome</li>
@@ -162,8 +307,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>What other causal questions might social scientists or data scientists ask?</p>
 </section>
-<section id="causal-effects" class="level3">
-<h3 class="anchored" data-anchor-id="causal-effects">Causal Effects</h3>
+<section id="causal-effects" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="causal-effects"><span class="header-section-number">3.1.2</span> Causal Effects</h3>
 <p>When we are conducting a causal analysis, we will want to estimate a causal effect.</p>
 <ul>
 <li>Causal effects are all about ideal comparisons between treated vs.&nbsp;untreated</li>
@@ -180,9 +325,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>e.g., Average donations if contacted - Average donations if not contacted</li>
 </ul></li>
 </ul>
+<p>Note: If the math above is helpful, you can use it. If it is difficult to read, focus on the plain language definitions that go before it. The notation here is less important than the conceptual understanding.</p>
 </section>
-<section id="fundamental-problem-of-causal-inference" class="level3">
-<h3 class="anchored" data-anchor-id="fundamental-problem-of-causal-inference">Fundamental Problem of Causal Inference</h3>
+<section id="fundamental-problem-of-causal-inference" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="fundamental-problem-of-causal-inference"><span class="header-section-number">3.1.3</span> Fundamental Problem of Causal Inference</h3>
 <p>The problem: Fundamental Problem of Causal Inference</p>
 <p>What makes the evaluation of causal claims difficult, is that in the real world, we suffer from the fundamental problem of causal inference:</p>
 <ul>
@@ -194,8 +340,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>(Unless we are in <a href="https://www.youtube.com/watch?v=5E0M6Rh9qpg">Groundhog Day</a></p>
 </section>
 </section>
-<section id="randomized-controlled-trials" class="level2">
-<h2 class="anchored" data-anchor-id="randomized-controlled-trials">Randomized Controlled Trials</h2>
+<section id="randomized-controlled-trials" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="randomized-controlled-trials"><span class="header-section-number">3.2</span> Randomized Controlled Trials</h2>
 <p>One approach for addressing the fundamental problem of causal inference is to simulate two potential states of the world through random assignment: Randomized Controlled Trials / Experiments</p>
 <p>Experiments approximate an ideal factual vs.&nbsp;counterfactual comparison</p>
 <ul>
@@ -212,8 +358,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>This allows us to compare the average outcomes between groups in order to estimate our causal effects (more on this below).</p>
-<section id="experiments-why-randomize" class="level3">
-<h3 class="anchored" data-anchor-id="experiments-why-randomize">Experiments: Why Randomize?</h3>
+<section id="experiments-why-randomize" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="experiments-why-randomize"><span class="header-section-number">3.2.1</span> Experiments: Why Randomize?</h3>
 <p>Randomization is essential for being able to <em>identify</em> and <em>isolate</em> the causal effect of the treatment on the outcome.</p>
 <p>Without randomization, there may be several reasons why two groups differ beyond the treatment of interest.</p>
 <ul>
@@ -227,8 +373,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Great news! This means any differences in the outcomes between the two groups can be attributed to the treatment. So if we wanted to see if <em>Top Gun Maverick</em> leads people to take up flying lessons, we could compare the average number of flying lessons among seniors who watched <em>Top Gun Maverick</em> compared to those who didn’t, and instead watched a different movie.</li>
 </ul>
 </section>
-<section id="experiments-how-to-analyze" class="level3">
-<h3 class="anchored" data-anchor-id="experiments-how-to-analyze">Experiments: How to Analyze</h3>
+<section id="experiments-how-to-analyze" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="experiments-how-to-analyze"><span class="header-section-number">3.2.2</span> Experiments: How to Analyze</h3>
 <p>Difference in Means: We compare each group’s average outcome by subtracting one from the other to estimate the average treatment effect (ATE) aka the average causal effect of the treatment.</p>
 <ul>
 <li><span class="math inline">\(\widehat{ATE} = \bar{Y}(treatment) - \bar{Y}(control)\)</span></li>
@@ -238,8 +384,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>E.g., on average how much a person donates to a campaign if contacted by phone compared to if not contacted by phone.</li>
 </ul>
 </section>
-<section id="ingredients-of-an-experiment" class="level3">
-<h3 class="anchored" data-anchor-id="ingredients-of-an-experiment">Ingredients of an Experiment</h3>
+<section id="ingredients-of-an-experiment" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="ingredients-of-an-experiment"><span class="header-section-number">3.2.3</span> Ingredients of an Experiment</h3>
 <p>From <a href="https://www.bitbybitbook.com/en/1st-ed/running-experiments/"><em>Bit by Bit</em></a></p>
 <p><img src="images/bitbybitexp.png" class="img-fluid"></p>
 <p>For every experiment, you should be able to</p>
@@ -253,8 +399,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We will turn to an example in the next section.</p>
 </section>
 </section>
-<section id="application-is-there-racial-discrimination-in-the-labor-market" class="level2">
-<h2 class="anchored" data-anchor-id="application-is-there-racial-discrimination-in-the-labor-market">Application: Is there racial discrimination in the labor market?</h2>
+<section id="application-is-there-racial-discrimination-in-the-labor-market" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="application-is-there-racial-discrimination-in-the-labor-market"><span class="header-section-number">3.3</span> Application: Is there racial discrimination in the labor market?</h2>
 <p>Marianne Bertrand and Sendhil Mullainathan. 2004. “Are Emily and Greg more employable than Lakisha and Jamal? A field experiment on labor market discrimination.”</p>
 <p>“We perform a field experiment to measure racial discrimination in the labor market. We respond with fictitious resumes to help-wanted ads in Boston and Chicago newspapers.”</p>
 <ul>
@@ -310,8 +456,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6       Jay   male white    0</code></pre>
 </div>
 </div>
-<section id="variable-classes" class="level3">
-<h3 class="anchored" data-anchor-id="variable-classes">Variable classes</h3>
+<section id="variable-classes" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="variable-classes"><span class="header-section-number">3.3.1</span> Variable classes</h3>
 <p>We can check the class of each variable: Look, we have a new type, a “factor” variable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(resume<span class="sc">$</span>firstname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -367,8 +513,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="making-tables" class="level2">
-<h2 class="anchored" data-anchor-id="making-tables">Making tables</h2>
+<section id="making-tables" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="making-tables"><span class="header-section-number">3.4</span> Making tables</h2>
 <p>A nice thing about numeric and factor variables is we can use the <code>table</code> command to see how many observations in our data fall into each category or numerical value.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Example: how many black vs. white sounding resumes</span></span>
@@ -386,8 +532,8 @@ black white
 <pre><code>[1] "black" "white"</code></pre>
 </div>
 </div>
-<section id="crosstabulation" class="level3">
-<h3 class="anchored" data-anchor-id="crosstabulation">Crosstabulation</h3>
+<section id="crosstabulation" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="crosstabulation"><span class="header-section-number">3.4.1</span> Crosstabulation</h3>
 <p>We can also use the <code>table</code> command to show a crosstabulation: a table that displays the frequency of observations across two variables.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Example: how many black vs. white sounding resumes by call backs</span></span>
@@ -402,8 +548,8 @@ calledback black white
 </div>
 </section>
 </section>
-<section id="conditional-means" class="level2">
-<h2 class="anchored" data-anchor-id="conditional-means">Conditional Means</h2>
+<section id="conditional-means" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="conditional-means"><span class="header-section-number">3.5</span> Conditional Means</h2>
 <p>Another thing we can do with factor variables is to find how the average of one variable (e.g., our outcome- the callback rate) varies across different categories of our factor variable. For this, we use <code>tapply()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## take the mean of input1 by categories of input2</span></span>
@@ -415,8 +561,8 @@ calledback black white
 </div>
 </div>
 </section>
-<section id="relational-operators-in-r" class="level2">
-<h2 class="anchored" data-anchor-id="relational-operators-in-r">Relational Operators in R</h2>
+<section id="relational-operators-in-r" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="relational-operators-in-r"><span class="header-section-number">3.6</span> Relational Operators in R</h2>
 <p>Goal: Compare callback rates for white sounding names to black sounding names, so we need to be able to filter by race.</p>
 <p>Good news: We have several relational operators in R that evaluate logical statements:</p>
 <ul>
@@ -446,8 +592,8 @@ calledback black white
 </div>
 <p>How can we interpret this? Do white applicants have an advantage?</p>
 </section>
-<section id="subsetting-data-in-r" class="level2">
-<h2 class="anchored" data-anchor-id="subsetting-data-in-r">Subsetting data in R</h2>
+<section id="subsetting-data-in-r" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="subsetting-data-in-r"><span class="header-section-number">3.7</span> Subsetting data in R</h2>
 <p>Subsetting Dataframes in R</p>
 <p>Maybe we are interested in differences in callbacks for females. One approach for looking at the treatment effect for female applicants, only, is to subset our data to include only female names.</p>
 <ul>
@@ -470,8 +616,8 @@ calledback black white
 <pre><code>[1] -0.03264689</code></pre>
 </div>
 </div>
-<section id="getting-booooooooolean" class="level3">
-<h3 class="anchored" data-anchor-id="getting-booooooooolean">Getting Booooooooolean</h3>
+<section id="getting-booooooooolean" class="level3" data-number="3.7.1">
+<h3 data-number="3.7.1" class="anchored" data-anchor-id="getting-booooooooolean"><span class="header-section-number">3.7.1</span> Getting Booooooooolean</h3>
 <p>We can make this slightly more complex by adding more criteria. Let’s say we wanted to know the callback rates for just female black (sounding) names.</p>
 <ul>
 <li>R allows use to use <code>&amp;</code> (and) and <code>|</code> (or)</li>
@@ -488,8 +634,8 @@ calledback black white
 </div>
 </section>
 </section>
-<section id="creating-new-variables-using-conditional-statements" class="level2">
-<h2 class="anchored" data-anchor-id="creating-new-variables-using-conditional-statements">Creating New Variables using Conditional statements</h2>
+<section id="creating-new-variables-using-conditional-statements" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="creating-new-variables-using-conditional-statements"><span class="header-section-number">3.8</span> Creating New Variables using Conditional statements</h2>
 <p>We can instead create a new variable in our main dataframe. Let’s make a variable that takes the value 1 if a name is female and black sounding and 0, otherwise</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a new variable called femaleblackname</span></span>
@@ -555,8 +701,8 @@ name         0   1
 </div>
 </div>
 <p>BINGO: two ways to do the same thing.</p>
-<section id="ifelse-statements" class="level3">
-<h3 class="anchored" data-anchor-id="ifelse-statements">ifelse statements</h3>
+<section id="ifelse-statements" class="level3" data-number="3.8.1">
+<h3 data-number="3.8.1" class="anchored" data-anchor-id="ifelse-statements"><span class="header-section-number">3.8.1</span> ifelse statements</h3>
 <p>Remember how we created the variable <code>femaleblack</code>, well there is another way to do that in R using what are called conditional statements with <code>ifelse()</code>.</p>
 <ul>
 <li>Can be read: If this relational statement is <code>TRUE</code>, I assign you A, otherwise I assign you B</li>
@@ -584,8 +730,8 @@ name         0   1
 <p>Note: what you assign can be numeric or text.</p>
 </section>
 </section>
-<section id="types-of-experiments" class="level2">
-<h2 class="anchored" data-anchor-id="types-of-experiments">Types of Experiments</h2>
+<section id="types-of-experiments" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="types-of-experiments"><span class="header-section-number">3.9</span> Types of Experiments</h2>
 <p>Experiments can vary:</p>
 <ul>
 <li>Setting: Lab, Survey, Field</li>
@@ -621,12 +767,12 @@ name         0   1
 <p><img src="images/whichsubject.png" class="img-fluid"></p>
 <p>Emails are virtually costless. Very easy to ask: Are people more likely to open them with X subject or Y subject or Z subject?</p>
 </section>
-<section id="wrapping-up-causation-with-experiments" class="level2">
-<h2 class="anchored" data-anchor-id="wrapping-up-causation-with-experiments">Wrapping Up Causation with Experiments</h2>
+<section id="wrapping-up-causation-with-experiments" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="wrapping-up-causation-with-experiments"><span class="header-section-number">3.10</span> Wrapping Up Causation with Experiments</h2>
 <p>In this section, we have discussed what it means to make a causal claim, why it is essentially impossible to make causal comparisons in real life due to the fundamental problem of causal inferences, and how experiments can help us make comparisons that approximate our causal ideals.</p>
 <p>In the next section, we start to examine how to visualize data.</p>
-<section id="summary-of-r-tools-in-this-section" class="level3">
-<h3 class="anchored" data-anchor-id="summary-of-r-tools-in-this-section">Summary of R tools in this section</h3>
+<section id="summary-of-r-tools-in-this-section" class="level3" data-number="3.10.1">
+<h3 data-number="3.10.1" class="anchored" data-anchor-id="summary-of-r-tools-in-this-section"><span class="header-section-number">3.10.1</span> Summary of R tools in this section</h3>
 <p>Here are some of the R tools we used in this section:</p>
 <ul>
 <li><code>table()</code>: this function summarizes the frequency of observations that take a particular value. The input is one or more variables in your data.
@@ -649,12 +795,12 @@ name         0   1
 </ul></li>
 <li><code>subset()</code>: We can subset whole rows of our data using this function. It takes two inputs– the first is the name of the original dataframe, and the second is a relational statement. Usually we store this output in R by assigning the results to a new object, a dataframe that contains only those rows for which the logical statement using the relational operators is true. E.g., <code>females &lt;- subset(resume, sex == "female")</code> subsets our data to keep only those rows where applicants were female.</li>
 </ul>
-</section>
+
+
 </section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -888,6 +1034,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./02-Description.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Description</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
