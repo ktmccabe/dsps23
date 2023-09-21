@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>visualization</title>
+<title>Data Science for Political Science - 4&nbsp; Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,32 +57,175 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="04-Visualization_files/libs/clipboard/clipboard.min.js"></script>
-<script src="04-Visualization_files/libs/quarto-html/quarto.js"></script>
-<script src="04-Visualization_files/libs/quarto-html/popper.min.js"></script>
-<script src="04-Visualization_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="04-Visualization_files/libs/quarto-html/anchor.min.js"></script>
-<link href="04-Visualization_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="04-Visualization_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="04-Visualization_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="04-Visualization_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="04-Visualization_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-CausalityI.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar docked">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-Visualization.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Visualization</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Political Science</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Data-Science-for-Political-Science.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Description</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-CausalityI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causation with Experiments</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-Visualization.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Section Contents</h2>
+   
+  <ul>
+  <li><a href="#application-social-status-and-economic-views" id="toc-application-social-status-and-economic-views" class="nav-link active" data-scroll-target="#application-social-status-and-economic-views"><span class="header-section-number">4.1</span> Application: Social Status and Economic Views</a></li>
+  <li><a href="#boxplots" id="toc-boxplots" class="nav-link" data-scroll-target="#boxplots"><span class="header-section-number">4.2</span> Boxplots</a>
+  <ul>
+  <li><a href="#data-summary-boxplot" id="toc-data-summary-boxplot" class="nav-link" data-scroll-target="#data-summary-boxplot"><span class="header-section-number">4.2.1</span> Data Summary: Boxplot</a></li>
+  </ul></li>
+  <li><a href="#barplots" id="toc-barplots" class="nav-link" data-scroll-target="#barplots"><span class="header-section-number">4.3</span> Barplots</a>
+  <ul>
+  <li><a href="#saving-plots" id="toc-saving-plots" class="nav-link" data-scroll-target="#saving-plots"><span class="header-section-number">4.3.1</span> Saving Plots</a></li>
+  <li><a href="#creating-new-variables" id="toc-creating-new-variables" class="nav-link" data-scroll-target="#creating-new-variables"><span class="header-section-number">4.3.2</span> Creating New Variables</a></li>
+  </ul></li>
+  <li><a href="#application-changing-minds-on-gay-marriage" id="toc-application-changing-minds-on-gay-marriage" class="nav-link" data-scroll-target="#application-changing-minds-on-gay-marriage"><span class="header-section-number">4.4</span> Application: Changing Minds on Gay Marriage</a>
+  <ul>
+  <li><a href="#recall-creating-new-variables" id="toc-recall-creating-new-variables" class="nav-link" data-scroll-target="#recall-creating-new-variables"><span class="header-section-number">4.4.1</span> Recall: Creating new variables</a></li>
+  <li><a href="#recall-using-ifelse-to-create-new-variable" id="toc-recall-using-ifelse-to-create-new-variable" class="nav-link" data-scroll-target="#recall-using-ifelse-to-create-new-variable"><span class="header-section-number">4.4.2</span> Recall: Using ifelse to create new variable</a></li>
+  <li><a href="#calculating-the-average-treatment-effect" id="toc-calculating-the-average-treatment-effect" class="nav-link" data-scroll-target="#calculating-the-average-treatment-effect"><span class="header-section-number">4.4.3</span> Calculating the Average Treatment Effect</a></li>
+  <li><a href="#visualize-means-in-a-barplot" id="toc-visualize-means-in-a-barplot" class="nav-link" data-scroll-target="#visualize-means-in-a-barplot"><span class="header-section-number">4.4.4</span> Visualize means in a barplot</a></li>
+  </ul></li>
+  <li><a href="#scatterplots" id="toc-scatterplots" class="nav-link" data-scroll-target="#scatterplots"><span class="header-section-number">4.5</span> Scatterplots</a></li>
+  <li><a href="#histograms" id="toc-histograms" class="nav-link" data-scroll-target="#histograms"><span class="header-section-number">4.6</span> Histograms</a>
+  <ul>
+  <li><a href="#happy-research-ending" id="toc-happy-research-ending" class="nav-link" data-scroll-target="#happy-research-ending"><span class="header-section-number">4.6.1</span> Happy research ending</a></li>
+  </ul></li>
+  <li><a href="#line-plots" id="toc-line-plots" class="nav-link" data-scroll-target="#line-plots"><span class="header-section-number">4.7</span> Line Plots</a></li>
+  <li><a href="#application-trends-during-covid" id="toc-application-trends-during-covid" class="nav-link" data-scroll-target="#application-trends-during-covid"><span class="header-section-number">4.8</span> Application: Trends during COVID</a></li>
+  <li><a href="#visual-tips-and-tricks" id="toc-visual-tips-and-tricks" class="nav-link" data-scroll-target="#visual-tips-and-tricks"><span class="header-section-number">4.9</span> Visual tips and tricks</a></li>
+  <li><a href="#common-r-plotting-functions-and-arguments" id="toc-common-r-plotting-functions-and-arguments" class="nav-link" data-scroll-target="#common-r-plotting-functions-and-arguments"><span class="header-section-number">4.10</span> Common R plotting functions and arguments</a></li>
+  <li><a href="#a-note-on-ggplot" id="toc-a-note-on-ggplot" class="nav-link" data-scroll-target="#a-note-on-ggplot"><span class="header-section-number">4.11</span> A note on <code>ggplot</code></a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="visualization" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Visualization</span></span></h1>
+</div>
 
 
-<section id="visualization" class="level1">
-<h1>Visualization</h1>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
 <p>In this section, we discuss a set of tools for data visualization in R.</p>
 <p>Goals of data visualization</p>
 <ul>
@@ -117,8 +260,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>e.g., Correlation</li>
 </ul></li>
 </ul>
-<section id="application-social-status-and-economic-views" class="level2">
-<h2 class="anchored" data-anchor-id="application-social-status-and-economic-views">Application: Social Status and Economic Views</h2>
+<section id="application-social-status-and-economic-views" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="application-social-status-and-economic-views"><span class="header-section-number">4.1</span> Application: Social Status and Economic Views</h2>
 <p>We are going to explore different types of visualizations through different social science examples. The first application we visit is a survey experiment.</p>
 <p>Thal, A. (2020). The desire for social status and economic conservatism among affluent Americans. American Political Science Review, 114(2), 426-442.</p>
 <p>In the experiment, affluent Americans are randomly assigned to encounter Facebook posts in which others broadcast their economic success. These posts are designed in a way that encourages affluent respondents to view economic success as a means of achieving social status.</p>
@@ -142,8 +285,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/status2.png" class="img-fluid" style="width:70.0%"></p>
 <p><strong>Can you put this into the potential outcomes framework?</strong></p>
 </section>
-<section id="boxplots" class="level2">
-<h2 class="anchored" data-anchor-id="boxplots">Boxplots</h2>
+<section id="boxplots" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="boxplots"><span class="header-section-number">4.2</span> Boxplots</h2>
 <p>For a video explainer of the code for boxplots and barplots, see below. The video only discusses the code. Use the notes and lecture discussion for additional context. (Via youtube, you can speed up the playback to 1.5 or 2x speed.)</p>
 <div class="ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/QmQr4lfrmUc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>Let’s load the data! Here, note that the data file is in a .RData format instead of .csv. This means that instead of using <code>read.csv</code>, we should use a function to load the data that is suitable for the .RData format. This will be <code>load</code>. That function works the following way:</p>
@@ -169,8 +312,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>gender</code>: 1= male; 0= otherwise</li>
 <li><code>econcon</code>: Economic views. Numeric variable from 0 to 1, with higher values reflecting more conservative views</li>
 </ul>
-<section id="data-summary-boxplot" class="level3">
-<h3 class="anchored" data-anchor-id="data-summary-boxplot">Data Summary: Boxplot</h3>
+<section id="data-summary-boxplot" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="data-summary-boxplot"><span class="header-section-number">4.2.1</span> Data Summary: Boxplot</h3>
 <p>Characterize the distributions of continuous numeric variables at once</p>
 <ul>
 <li>Features: box, whiskers, outliers</li>
@@ -214,8 +357,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>How should we interpret these results? Does status or social approval motivation, specifically, influence economic views? What about other potential motivations?</p>
 </section>
 </section>
-<section id="barplots" class="level2">
-<h2 class="anchored" data-anchor-id="barplots">Barplots</h2>
+<section id="barplots" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="barplots"><span class="header-section-number">4.3</span> Barplots</h2>
 <p>Comparing frequencies (raw N), proportions, and/or means across categories</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -284,8 +427,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>How could we improve this plot to make the interpretation easier?</li>
 </ul>
-<section id="saving-plots" class="level3">
-<h3 class="anchored" data-anchor-id="saving-plots">Saving Plots</h3>
+<section id="saving-plots" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="saving-plots"><span class="header-section-number">4.3.1</span> Saving Plots</h3>
 <p>You can save an image of your plot as a <code>png()</code> to your working directory. Place <code>png()</code> just before your plot with a name in quotations, and then specify the dimensions. Place <code>dev.off()</code> at the bottom.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">"mybarplot.png"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">res=</span><span class="dv">300</span>, <span class="at">units=</span><span class="st">"in"</span>)</span>
@@ -305,8 +448,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Alternatively, you can save it as an image, by going to the plot window in your RStudio environment, and clicking on Export -&gt; Save as Image. Here, you can save it in any file format you would like, as well as change the dimensions.</p>
 <p><img src="images/saveplot.png" class="img-fluid"></p>
 </section>
-<section id="creating-new-variables" class="level3">
-<h3 class="anchored" data-anchor-id="creating-new-variables">Creating New Variables</h3>
+<section id="creating-new-variables" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="creating-new-variables"><span class="header-section-number">4.3.2</span> Creating New Variables</h3>
 <p>The author theorizes that social approval, self-esteem, and conspicuous consumption are all elements of “status motivation.” We could analyze the results by collapsing them into a single category called “status motivation” and compare it to the other experimental groups.</p>
 <ul>
 <li>Create a new variable <code>conditionnew</code></li>
@@ -365,8 +508,8 @@ Concrete  Placebo   Status
 </div>
 </section>
 </section>
-<section id="application-changing-minds-on-gay-marriage" class="level2">
-<h2 class="anchored" data-anchor-id="application-changing-minds-on-gay-marriage">Application: Changing Minds on Gay Marriage</h2>
+<section id="application-changing-minds-on-gay-marriage" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="application-changing-minds-on-gay-marriage"><span class="header-section-number">4.4</span> Application: Changing Minds on Gay Marriage</h2>
 <p>We now turn to a study that asks the question</p>
 <ul>
 <li>Research Question Can we effectively persuade people to change their minds?
@@ -435,8 +578,8 @@ Concrete  Placebo   Status
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>marriage1<span class="sc">$</span>outcome <span class="ot">&lt;-</span> marriage1<span class="sc">$</span>therm2 <span class="sc">-</span> marriage1<span class="sc">$</span>therm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="recall-creating-new-variables" class="level3">
-<h3 class="anchored" data-anchor-id="recall-creating-new-variables">Recall: Creating new variables</h3>
+<section id="recall-creating-new-variables" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="recall-creating-new-variables"><span class="header-section-number">4.4.1</span> Recall: Creating new variables</h3>
 <p>Let’s create a new variable <code>treatmentnew</code> that collapses the two Recycling and Same-Sex marriage conditions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>marriage1<span class="sc">$</span>treatmentnew <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
@@ -457,8 +600,8 @@ Concrete  Placebo   Status
 </div>
 </div>
 </section>
-<section id="recall-using-ifelse-to-create-new-variable" class="level3">
-<h3 class="anchored" data-anchor-id="recall-using-ifelse-to-create-new-variable">Recall: Using ifelse to create new variable</h3>
+<section id="recall-using-ifelse-to-create-new-variable" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="recall-using-ifelse-to-create-new-variable"><span class="header-section-number">4.4.2</span> Recall: Using ifelse to create new variable</h3>
 <p>An alternative way we could create a variable is to use <code>ifelse</code></p>
 <p>Let’s try another way using the <code>ifelse</code> command.</p>
 <ul>
@@ -483,16 +626,16 @@ Concrete  Placebo   Status
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>marriage1<span class="sc">$</span>treatmentnew2 <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(marriage1<span class="sc">$</span>treatmentnew2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="calculating-the-average-treatment-effect" class="level3">
-<h3 class="anchored" data-anchor-id="calculating-the-average-treatment-effect">Calculating the Average Treatment Effect</h3>
+<section id="calculating-the-average-treatment-effect" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="calculating-the-average-treatment-effect"><span class="header-section-number">4.4.3</span> Calculating the Average Treatment Effect</h3>
 <p>We now have our outcome and our treatment conditions. In an experiment, we want to look at the difference in means between conditions. Let’s calculate the means.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>outs <span class="ot">&lt;-</span> <span class="fu">tapply</span>(marriage1<span class="sc">$</span>outcome, marriage1<span class="sc">$</span>treatmentnew, mean, <span class="at">na.rm=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note: Sometimes data include missing cells. In R, these have an <code>NA</code>. To ignore these when calculating a mean, we add <code>na.rm = T</code> to the <code>mean()</code> or <code>tapply()</code> functions.</p>
 </section>
-<section id="visualize-means-in-a-barplot" class="level3">
-<h3 class="anchored" data-anchor-id="visualize-means-in-a-barplot">Visualize means in a barplot</h3>
+<section id="visualize-means-in-a-barplot" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="visualize-means-in-a-barplot"><span class="header-section-number">4.4.4</span> Visualize means in a barplot</h3>
 <p>Let’s also add a line at 0 using <code>abline()</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(outs,</span>
@@ -517,8 +660,8 @@ Concrete  Placebo   Status
 </ul>
 </section>
 </section>
-<section id="scatterplots" class="level2">
-<h2 class="anchored" data-anchor-id="scatterplots">Scatterplots</h2>
+<section id="scatterplots" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="scatterplots"><span class="header-section-number">4.5</span> Scatterplots</h2>
 <p>It turns out that study was completely fabricated, and the article was eventually <a href="https://www.newyorker.com/science/maria-konnikova/how-a-gay-marriage-study-went-wrong">retracted</a>.</p>
 <p>How did people know? Well a team of researchers became suspicious based on exploratory analyses they conducted with the data. Let’s do a few of these to learn about scatterplots and histograms.</p>
 <p>Scatter plots show the relationship between two numeric variables.</p>
@@ -586,8 +729,8 @@ Concrete  Placebo   Status
 <li>Because there was such a high correlation, it suggested that the data might not have been generated by real human responses</li>
 </ul>
 </section>
-<section id="histograms" class="level2">
-<h2 class="anchored" data-anchor-id="histograms">Histograms</h2>
+<section id="histograms" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="histograms"><span class="header-section-number">4.6</span> Histograms</h2>
 <p>The researchers later discovered the Wave 1 data was suspiciously correlated with an existing survey: 2012 CCAP.</p>
 <ul>
 <li>They believe the researcher likely used CCAP for Wave 1 - used survey responses from real humans that took a real survey – but not the humans that the researcher claimed to interview in the experiment.</li>
@@ -622,8 +765,8 @@ Concrete  Placebo   Status
 <li>However, Wave 2 has less heaping, particularly at 50. This suggested to the researchers that the Wave 2 data were likely generated by a computer and not real humans</li>
 </ul></li>
 </ul>
-<section id="happy-research-ending" class="level3">
-<h3 class="anchored" data-anchor-id="happy-research-ending">Happy research ending</h3>
+<section id="happy-research-ending" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="happy-research-ending"><span class="header-section-number">4.6.1</span> Happy research ending</h3>
 <p>While the original article was retracted</p>
 <ul>
 <li>Researchers who found irregularities received funding to conduct similar studies with real data this time</li>
@@ -636,8 +779,8 @@ Concrete  Placebo   Status
 </ul>
 </section>
 </section>
-<section id="line-plots" class="level2">
-<h2 class="anchored" data-anchor-id="line-plots">Line Plots</h2>
+<section id="line-plots" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="line-plots"><span class="header-section-number">4.7</span> Line Plots</h2>
 <p>In this application, we will create a line plot in R. Line plots are built very similarly to scatterplots. We provide R an input of values for the x-axis and corresponding values on the y-axis.</p>
 <p>For example, if we wanted to plot the US life expectancy for the past few years from 2018-2021, we could do the following based on data from the National Center for Health Statistics:</p>
 <div class="cell">
@@ -674,8 +817,8 @@ Concrete  Placebo   Status
 <p>The two vectors of values may come from variables in your data or may come from calculations you make using those variables.</p>
 <p>Let’s do a more complex example and break this down step by step.</p>
 </section>
-<section id="application-trends-during-covid" class="level2">
-<h2 class="anchored" data-anchor-id="application-trends-during-covid">Application: Trends during COVID</h2>
+<section id="application-trends-during-covid" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="application-trends-during-covid"><span class="header-section-number">4.8</span> Application: Trends during COVID</h2>
 <p>Since the onset of the pandemic in 2020, researchers have evaluated attitudinal and behavioral responses to policy changes, political messages, and COVID case/hospitalization/death rates.</p>
 <ul>
 <li>Survey data on attitudes and self-reported behavior</li>
@@ -922,8 +1065,8 @@ Concrete  Placebo   Status
 </div>
 </div>
 </section>
-<section id="visual-tips-and-tricks" class="level2">
-<h2 class="anchored" data-anchor-id="visual-tips-and-tricks">Visual tips and tricks</h2>
+<section id="visual-tips-and-tricks" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="visual-tips-and-tricks"><span class="header-section-number">4.9</span> Visual tips and tricks</h2>
 <p>Recall we said the goals of visualization are to communicate information</p>
 <ul>
 <li>Transparently (show me the data!)</li>
@@ -947,8 +1090,8 @@ Concrete  Placebo   Status
 <li>The axis dimensions should not be misleading. If the goal is to compare two or more plots to each other, we would want them to have similar axes, for example.</li>
 </ul>
 </section>
-<section id="common-r-plotting-functions-and-arguments" class="level2">
-<h2 class="anchored" data-anchor-id="common-r-plotting-functions-and-arguments">Common R plotting functions and arguments</h2>
+<section id="common-r-plotting-functions-and-arguments" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="common-r-plotting-functions-and-arguments"><span class="header-section-number">4.10</span> Common R plotting functions and arguments</h2>
 <p>Here is a refresher of several of the functions and arguments we have come across.</p>
 <p>Create a plot</p>
 <ul>
@@ -991,8 +1134,8 @@ Concrete  Placebo   Status
 <li><code>points()</code>: Adds points to a plot at specific x- and y- locations. Inputs are much like <code>plot</code></li>
 </ul>
 </section>
-<section id="a-note-on-ggplot" class="level2">
-<h2 class="anchored" data-anchor-id="a-note-on-ggplot">A note on <code>ggplot</code></h2>
+<section id="a-note-on-ggplot" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="a-note-on-ggplot"><span class="header-section-number">4.11</span> A note on <code>ggplot</code></h2>
 <p>R has a number of open-source packages that people can use to expand the set of capabilities for visualization and analysis. These can be installed through RStudio. We will look at one of these packages: <code>ggplot2</code>.</p>
 <p><strong><em>Using ggplot will be extra-credit at this point in the course. We may return to it later in the semester as part of the main curriculum. Reviewing this section of the notes is optional.</em></strong></p>
 <p>The “gg” in ggplot2 stands for the “Grammar of Graphics.” This program provides another framework for creating figures in R. According to Hadley Wickham, “ggplot2 provides beautiful, hassle-free plots that take care of fiddly details like drawing legends.”</p>
@@ -1105,11 +1248,11 @@ Concrete  Placebo   Status
 <p><img src="04-Visualization_files/figure-html/unnamed-chunk-50-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
+
+
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1343,6 +1486,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03-CausalityI.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causation with Experiments</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
