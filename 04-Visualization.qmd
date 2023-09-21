@@ -157,6 +157,23 @@ We will use the `barplot()` function.
     -   E.g., we could supply it a set of means to plot, not a raw variable
 -   Many of the other arguments are aesthetics similar to those when working with boxplot.
 -   This means that barplots are pretty easy to create in R. We can supply it a short vector of any values (e.g., `valuesbar <- c(20, 30, 40, 10)`), and we could also supply it a vector of any names to label those values.
+```{r, eval=F}
+## Example
+valuesbar <- c(20, 30, 40, 10)
+
+namesbar <- c("Livingston Dining \n Commons",
+              "Neilson \n Dining Hall",
+              "Busch \n Dining Hall",
+              "Brower \n Commons")
+
+barplot(valuesbar,
+        names=namesbar,
+        cex.names = .6,
+        main="Hypothetical Evaluation of RU Dining",
+        ylab="Percent Prefer Dining Option",
+        cex.lab = .7, 
+        col="red3")
+```
     -   For real applications, this means we could supply a barplot with the output of a `tapply()` function, a `table()` summarizing a single variable, or a set of `mean()` values we have combined into a vector using `c()`.
 
 For example, in experiments, we may use barplots to compare the mean from the treatment group(s) $\bar{Y}(1)$ to the control $\bar{Y}(0)$ on some outcome. Let's do it!
@@ -785,121 +802,6 @@ legend("bottomleft",  col=c("red3", "black"),
        bty="n")
 ```
 
-## Causal claims from before vs. after comparisons
-
-***What types of research questions could these trends generate?***
-
-```{r, echo=F}
-plot(x=1:length(mobilitybymonthNE),
-     y=mobilitybymonthNE,
-     type="l", 
-     main="Social Mobility by Month and Region",
-     ylab="Twitter Social Mobility Index",
-     xlab="",
-     ylim = c(0, 80),
-     las=1, 
-     lwd=2, 
-     bty="n",
-     xaxt="n") # removes original x-axis
-## Add line to the plot 
-lines(x=1:length(mobilitybymonthSO),
-     y=mobilitybymonthSO, col="red3", lwd=2)
-## add the axis the "1" means x-axis. A "2" would create a y-axis
-axis(1, at = 1:length(mobilitybymonthNE), 
-     labels=names(mobilitybymonthNE), las=2)
-## Add legend, "bottomleft" indicates where on the plot to locate it
-## Could use "topright" instead, for example
-legend("bottomleft",  col=c("red3", "black"), 
-       c("South", "Northeast"), 
-       cex = .7, # size of legend
-       lwd=2,
-       bty="n")
-```
-
-What would you want to know about how movement has changed since the start of COVID?
-
--   We will do an initial exploration to reveal some of the difficulties with making causal claims when we do not have the luxury of conducting an experiment. This discussion will continue in the next section.
-
-One thing that becomes apparent in the trend data is that mobility decreased substantially after March of 2020. As many of us know all too well, that corresponds to shortly after the onset of the pandemic in the United States.
-
-With that said, we may ask
-
--   What specifically caused the sudden decrease in mobility?
-    -   Did the announcement of federal guidelines to "slow the spread" have a causal effect on mobility?
-    -   Did the rise in COVID cases during that time have a causal effect on mobility?
-    -   Did gubernatorial actions at the state level cause mobility to decrease?
-
-For each of these questions, we could implement the potential outcomes framework.
-
--   For example, we want to compare mobility ($Y$) in the state of the world where a governor has announced social distancing and stay-at-home restrictions ($Y(1)_{governor}$) to mobility in a state of the world where the governor has not announced those restrictions ($Y(0)_{governor}$), holding everything else the same. Here we run into two problems.
-    -   Our friend, the fundamental problem of causal inference. We only get to observe one state of the world for any particular governor.
-    -   It would be hard to turn this into an experiment. We cannot go back in time and ask governors to come together for a field experiment that randomly assigns which states get restrictions and which do not.
-        -   While there is variation-- not all states had restrictions, this was not random.
--   Likewise, if we wanted to compare mobility ($Y$) in the state of the world where the federal government has announced social distancing and stay-at-home restrictions ($Y(1)_{president}$) to mobility in a state of the world where the president has not announced those restrictions ($Y(0)_{president}$), holding everything else the same. Here we run into the same two problems.
-    -   The fundamental problem of causal inference. We only get to observe one state of the world at any given point in time.
-    -   It may be hard to generate an experiment that simulates the idea of these two states of the world.
-
-So what can we do?
-
--   Researchers try to form comparison groups, in a strategic way, with the data they have (i.e., "observational" or "non-experimental" data).
--   Because they cannot randomly assign two different experiences of the world, instead they choose two cases or two groups of cases that
-    -   Seem extremely similar except
-    -   One has the treatment of interest, and one does not
-
-**Example: Before vs. After Comparison**
-
-Let's examine social mobility just before vs. just after the federal announcement of social distancing guidelines to stop the spread of COVID-19.
-
--   To do so, we will draw a vertical line at March 2020
-    -   Note we use `abline(v=)` to indicate a vertical line at a location to cross the x-axis
-
-This is the 15th entry in our vector, which means at point 15 on the x-axis.
-
-```{r}
-mobilitybymonthNE["2020-03"]
-mobilitybymonthNE[15]
-```
-
--   We will also add text to inform views what that line represents
-    -   Note we use `text(x= , y=, labels)` to indicate where to put text
-
-```{r}
-plot(x=1:length(mobilitybymonthNE),
-     y=mobilitybymonthNE,
-     type="l", 
-     main="Social Mobility by Month and Region",
-     ylab="Twitter Social Mobility Index",
-     xlab="",
-     ylim = c(0, 80),
-     las=1, 
-     lwd=2, 
-     bty="n",
-     xaxt="n") # removes original x-axis
-## Add line to the plot 
-lines(x=1:length(mobilitybymonthSO),
-     y=mobilitybymonthSO, col="red3", lwd=2)
-
-## add the axis the "1" means x-axis. A "2" would create a y-axis
-axis(1, at = 1:length(mobilitybymonthNE), 
-     labels=names(mobilitybymonthNE), las=2)
-## add dashed blue vertical line
-abline(v=15, lty=2, col="dodgerblue", lwd=1.5)
-
-## add text near the line
-## the \n breaks the text into different lines
-text(x=15, y=65, labels = "Federal \n Announcement", cex=.6)
-```
-
-We see mobility does appear to be lower after the announcement relative to before the announcement. Is this causal?
-
--   Assumption: We would want to be able to argue that social mobility in the weeks following the announcement (after time period) would look similar to social mobility in the weeks prior to the announcement (before period) **if not for the federal announcement**
-    -   That the before vs. after time periods would be similar in any meaningful way if not for the presence of the treatment in the after period.
-
-Does this seem like a plausible argument? Could other things (confounders) occurring around the time of the federal announcement also have caused the steep decline in social mobility?
-
--   If we think something else happened around the same time that might have caused mobility to go down anyway, then we may be doubtful that this is a *causal* effect.
-
-We will continue to discuss similar causal designs in the next section.
 
 ## Visual tips and tricks
 
