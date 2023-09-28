@@ -45,7 +45,7 @@ What do you do?
 Our goal: Try to "identify" the causal effect of one variable on an outcome. As Montell Jordan once said, this is how we do it:
 
 -   Use data we have (that exist out in the world)
--   Compare those who are \`\`treated" to a relevant comparison group who is not treated
+-   Compare those who are "treated" to a relevant comparison group who is not treated
 
 However, we can't randomize treatment so....
 
@@ -53,7 +53,344 @@ However, we can't randomize treatment so....
 
 We want to rule out all possible confounding variables and "alternative explanations" for the outcomes we observed.
 
-### Three Common Identification Strategies
+### Example: Social Mobility Data
+
+Since the onset of the pandemic in 2020, researchers have evaluated attitudinal and behavioral responses to policy changes, political messages, and COVID case/hospitalization/death rates.
+
+-   Survey data on attitudes and self-reported behavior
+-   Health care provider administrative data
+-   Mobile phone data to track locations
+-   Social media data to track attitudes and mobility
+
+***Example: Using Survey data from over 1.1 million responses*** to measure concern about the coronavirus over time.
+
+-   Clinton, Joshua, et al. "[Partisan pandemic: How partisanship and public health concerns affect individuals' social mobility during COVID-19](https://www.science.org/doi/10.1126/sciadv.abd7204)." Science advances 7.2 (2021): eabd7204.
+
+![](images/covidsurvey.png)
+
+***Example: Using the geotracking data of 15 million smartphones*** per day to compute percentage reduction in general movement and visiting non-essential services relative to before COVID-19 (before March 9).
+
+-   Gollwitzer, Anton, et al. "[Partisan differences in physical distancing are linked to health outcomes during the COVID-19 pandemic](https://www.nature.com/articles/s41562-020-00977-7)." Nature human behaviour 4.11 (2020): 1186-1197.
+
+![](images/covidphone.png)
+
+
+***Example: Using Twitter geolocation data*** to track how much movement users have by looking at the distances from all locations where a given user has tweeted.
+
+-   Paiheng Xu, Mark Dredze, David A Broniatowski. "[The Twitter Social Mobility Index: Measuring Social Distancing Practices from Geolocated Tweets](https://socialmobility.covid19dataresources.org/)." Journal of Medical Internet Research (JMIR), 2020.
+
+![](images/covidtwitter.png)
+
+
+We will use the Twitter social mobility index to study how the movement of geo-located Twitter users changed from 2019 into April 2022.
+
+-   We will compare this movement for users located in the Northeast vs. South
+
+Each row of the dataset represents a week of the year. Each column represents a particular geography for which social mobility was calculated by the researchers.
+
+-   `Dates` indicates the date
+-   `Northeast`: social mobility data for those in the northeast of the U.S.
+-   `South`: social mobility data for those in the south of the U.S.
+
+```{r}
+## Load the data from the author Mark Dredze's website
+covid <- read.csv("https://raw.githubusercontent.com/mdredze/covid19_social_mobility.github.io/master/data/longitudinal_compiled.csv")
+```
+
+Just like we have encountered numeric, factor, and character variables, R also has the ability to treat variables specifically as dates. We will want R to treat the date variable we read in as a date, and not as raw text or some other variable type. To do this, we will use the `as.Date` function.
+
+```{r}
+## Date variable original format and class
+head(covid$Dates)
+class(covid$Dates)
+
+## Convert to class Date
+covid$Dates <- as.Date(covid$Date)
+head(covid$Dates)
+class(covid$Dates)
+```
+
+The researchers continue to add to these data. Let's look at the portion of data from 2019 to April 2022.
+
+-   Note the use of `as.Date` again to make sure R knows our text should be treated as a date
+-   Note the use of the greater than or equal to `>=` and less than or equal signs `<=` to specify which rows we want to keep in the data. We want rows that are in dates after January 1, 2019 and (`&`) on or before April 25, 2022.
+
+```{r}
+covidsub <- subset(covid, Dates >= as.Date("2019-01-01") &
+                     Dates <= as.Date("2022-04-25"))
+```
+These data are collected by week. That is very detailed. While that may be useful, let us create another variable that contains just the month and year, which will allow us to calculate the average per month. With a date variable, we can use the `format` function to change the format to just year and month.
+
+```{r}
+covidsub$monthyear <- format(covidsub$Dates, "%Y-%m")
+range(covidsub$monthyear)
+```
+
+
+Where we are going ...
+
+```{r, echo=F}
+mobilitybymonthNE <- tapply(covidsub$Northeast, covidsub$monthyear, mean,
+                          na.rm=T)
+
+mobilitybymonthSO <- tapply(covidsub$South, covidsub$monthyear, mean,
+                          na.rm=T)
+
+plot(x=1:length(mobilitybymonthNE),y=mobilitybymonthNE,
+     type="l", pch=15,
+     main="Avg. Social Mobility by Month and Region",
+     ylab="Twitter Social Mobility Index",
+     xlab="",
+     ylim = c(0, 80), las=1,
+     lwd=2,
+     bty="n",
+     xaxt="n")
+lines(x=1:length(mobilitybymonthSO),y=mobilitybymonthSO, col="red3", lwd=2)
+axis(1, at = 1:length(mobilitybymonthNE), 
+     labels= names(mobilitybymonthNE), 
+     las=2, cex.axis=.7)
+legend("bottomleft",  col=c("red3", "black"), 
+       c("South", "Northeast"), cex = .7, lty=1,lwd=2,
+       bty="n")
+```
+
+Starting from the bottom ...
+
+-   Let's first create a scatterplot by providing R with our two variables
+-   In a trend/line plot, we want each month on the x-axis
+-   We want our outcome on the y-axis, in this case, average social mobility by month
+-   Ultimately we will want to compare the Northeast with the South. We will plot one line at a time, starting with the Northeast
+
+We first need to find the average by month. Recall our `tapply()` function.
+
+```{r}
+mobilitybymonthNE <- tapply(covidsub$Northeast, covidsub$monthyear, mean,
+                          na.rm=T)
+
+mobilitybymonthSO <- tapply(covidsub$South, covidsub$monthyear, mean,
+                          na.rm=T)
+```
+
+Let's look at the output for the Northeast. Each value is what we ultimately want on the y-axis-- the average social mobility in a given month.
+
+```{r}
+mobilitybymonthNE
+```
+
+We want to plot them each at their own point on the x-axis, from the first month to the last month. We can start by creating a vector of the same length as we have months:
+
+```{r}
+1:length(mobilitybymonthNE)
+```
+
+These become our two inputs in the plot.
+
+```{r}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE, pch=16) # pch is point type
+```
+
+We now transform it to a line by specifying `type="l"`
+
+-   By default, R creates a plot with `type=p` for points. R also has `type=b` which has both a line and points.
+
+```{r}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE, type="l") # makes it a line
+```
+
+Let us change the aesthetics a bit by adding labels and removing the border with `bty="n"`.
+
+```{r}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE,
+     type="l", 
+     main="Social Mobility by Month and Region",
+     ylab="Twitter Social Mobility Index",
+     xlab="",
+     ylim = c(0, 80), # y-axis limits
+     las=1, # orientation of axis labels
+     lwd=2, # line width
+     bty="n") # removes border
+```
+
+Let's add a comparison line with the `lines()` function to look at trends for the south.
+
+-   Note that this is outside of the `plot()` function, but the inputs are very similar. We supply a set of x and y coordindates.
+
+```{r}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE,
+     type="l", 
+     main="Social Mobility by Month and Region",
+     ylab="Twitter Social Mobility Index",
+     xlab="",
+     ylim = c(0, 80), # y-axis limits
+     las=1, # orientation of axis labels
+     lwd=2, # line width
+     bty="n") # removes border
+## Add line to the plot 
+lines(x=1:length(mobilitybymonthSO),
+     y=mobilitybymonthSO, col="red3", lwd=2)
+```
+
+Let's create our own axis for the plot to add detail. To do this, we add `xaxt` to the `plot` function and then use `axis()` below the function.
+
+The labels we will add are the actual months in the data. These happen to be the labels or `names` of our vectors:
+```{r}
+names(mobilitybymonthNE)
+```
+
+```{r}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE,
+     type="l", 
+     main="Social Mobility by Month and Region",
+     ylab="Twitter Social Mobility Index",
+     xlab="",
+     ylim = c(0, 80),
+     las=1, 
+     lwd=2, 
+     bty="n",
+     xaxt="n") # removes original x-axis
+## Add line to the plot 
+lines(x=1:length(mobilitybymonthSO),
+     y=mobilitybymonthSO, col="red3", lwd=2)
+## add the axis the "1" means x-axis. A "2" would create a y-axis
+axis(1, at = 1:length(mobilitybymonthNE), 
+     labels=names(mobilitybymonthNE), las=2)
+```
+
+Finally, let's add a `legend()`. Now we're here!
+
+```{r}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE,
+     type="l", 
+     main="Social Mobility by Month and Region",
+     ylab="Twitter Social Mobility Index",
+     xlab="",
+     ylim = c(0, 80),
+     las=1, 
+     lwd=2, 
+     bty="n",
+     xaxt="n") # removes original x-axis
+## Add line to the plot 
+lines(x=1:length(mobilitybymonthSO),
+     y=mobilitybymonthSO, col="red3", lwd=2)
+## add the axis the "1" means x-axis. A "2" would create a y-axis
+axis(1, at = 1:length(mobilitybymonthNE), 
+     labels=names(mobilitybymonthNE), las=2)
+
+## Add legend, "bottomleft" indicates where on the plot to locate it
+## Could use "topright" instead, for example
+legend("bottomleft",  col=c("red3", "black"), 
+       c("South", "Northeast"), 
+       cex = .7, # size of legend
+       lwd=2,
+       bty="n")
+```
+
+### Causal claims from before vs. after comparisons
+
+***What types of research questions could these trends generate?***
+
+```{r, echo=F}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE,
+     type="l", 
+     main="Social Mobility by Month and Region",
+     ylab="Twitter Social Mobility Index",
+     xlab="",
+     ylim = c(0, 80),
+     las=1, 
+     lwd=2, 
+     bty="n",
+     xaxt="n") # removes original x-axis
+## Add line to the plot 
+lines(x=1:length(mobilitybymonthSO),
+     y=mobilitybymonthSO, col="red3", lwd=2)
+## add the axis the "1" means x-axis. A "2" would create a y-axis
+axis(1, at = 1:length(mobilitybymonthNE), 
+     labels=names(mobilitybymonthNE), las=2)
+## Add legend, "bottomleft" indicates where on the plot to locate it
+## Could use "topright" instead, for example
+legend("bottomleft",  col=c("red3", "black"), 
+       c("South", "Northeast"), 
+       cex = .7, # size of legend
+       lwd=2,
+       bty="n")
+```
+
+What would you want to know about how movement has changed over time. Think about examples of causal claims you might make:
+
+- Example: X caused mobility to decline
+- Example: Z caused mobility to decrease
+- Example: W caused mobility to increase at different rates across different regions.
+
+
+So what can we do to test causal claims?
+
+-   What is the fundamental problem of causal inference in this case?
+-   Can we do an experiment?
+-   Researchers try to form comparison groups, in a strategic way, with the data they have (i.e., "observational" or "non-experimental" data).
+-   Because they cannot randomly assign two different experiences of the world, instead they choose two cases or two groups of cases that
+    -   Seem extremely similar except
+    -   One has the treatment of interest, and one does not
+
+**Example: Before vs. After Comparison**
+
+Let's examine social mobility just before vs. just after the federal announcement of social distancing guidelines to stop the spread of COVID-19.
+
+-   To do so, we will draw a vertical line at March 2020
+    -   Note we use `abline(v=)` to indicate a vertical line at a location to cross the x-axis
+
+This is the 15th entry in our vector, which means at point 15 on the x-axis.
+```{r}
+mobilitybymonthNE["2020-03"]
+mobilitybymonthNE[15]
+```
+
+-   We will also add text to inform views what that line represents
+    -   Note we use `text(x= , y=, labels)` to indicate where to put text
+
+```{r}
+plot(x=1:length(mobilitybymonthNE),
+     y=mobilitybymonthNE,
+     type="l", 
+     main="Social Mobility by Month and Region",
+     ylab="Twitter Social Mobility Index",
+     xlab="",
+     ylim = c(0, 80),
+     las=1, 
+     lwd=2, 
+     bty="n",
+     xaxt="n") # removes original x-axis
+## Add line to the plot 
+lines(x=1:length(mobilitybymonthSO),
+     y=mobilitybymonthSO, col="red3", lwd=2)
+
+## add the axis the "1" means x-axis. A "2" would create a y-axis
+axis(1, at = 1:length(mobilitybymonthNE), 
+     labels=names(mobilitybymonthNE), las=2)
+## add dashed blue vertical line
+abline(v=15, lty=2, col="dodgerblue", lwd=1.5)
+
+## add text near the line
+## the \n breaks the text into different lines
+text(x=15, y=65, labels = "Federal \n Announcement", cex=.6)
+```
+
+We see mobility does appear to be lower after the announcement relative to before the announcement. Is this causal?
+
+-   Assumption: We would want to be able to argue that social mobility in the weeks following the announcement (after time period) would look similar to social mobility in the weeks prior to the announcement (before period) **if not for the federal announcement**
+    -   That the before vs. after time periods would be similar in any meaningful way if not for the presence of the treatment in the after period.
+
+Does this seem like a plausible argument? Could other things (confounders) occurring around the time of the federal announcement also have caused the steep decline in social mobility?
+
+-   If we think something else happened around the same time that might have caused mobility to go down anyway, then we may be doubtful that this is a *causal* effect.
+
+## Three Common Identification Strategies
 
 Example: Does drinking Sprite make a person a better basketball player? (Inspired by 1990s commercial where a kid believes drinking Sprite will cause him to play basketball better.)
 
@@ -109,7 +446,6 @@ Instead, if, for example, Grant Hill got a new trainer during this period AND hi
 
 -   Causality is hard!
 
-*In class, you will work together to think about possible research designs for different causal questions*
 
 ## Application: Economic Effects of Basque Terrorism
 
