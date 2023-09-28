@@ -53,6 +53,64 @@ However, we can't randomize treatment so....
 
 We want to rule out all possible confounding variables and "alternative explanations" for the outcomes we observed.
 
+### Example: Travis Kelce Jersey Sale and Instagram Gains
+
+
+Why did Travis Kelce experience an increase in social media followers?
+
+-  Let's use the `plot()` function to visualize this
+     + Kelce saw an increase in followers on Fri, Sept 22 of 8786
+     + Kelce saw an increase in followers on Sat, Sept 23 of 7242
+     + Kelce saw an increase in followers on Sun, Sept 24 of 27249
+-  When visualizing a trend, we put time on the x-axis
+
+```{r}
+time <- c("Fri, Sept 22", "Sat, Sept 23", "Sun, Sept 24")
+```
+-  We put the values of the outcome on the y-axis
+
+```{r}
+followers <- c(8786, 7242, 27249)
+```
+
+#### Line Plots
+
+To make it a line plot, we add `type = "l"` or `type = "b"`.
+
+-  Note: Because our time is text-based, we cannot add it to the plot directly. Instead, we use a placeholder `1:length(time)`.
+-  Instead, we add `xaxt="n"` to remove the default x-axis and add `axis()` below the plot code to add our own custom axis. By adding the "`1`", we are indicating it should be drawn on the x-axis
+
+```{r}
+plot(x=1:length(time), y=followers,
+     type="b",
+     main = "Travis Kelce Instagram Follower Gains over Time",
+     ylab="Instagram Follower Gains",
+     xlab="Date",
+     xaxt="n",
+     las=2, cex.axis=.8)
+axis(1, at=1:length(time), labels=time, cex.axis=.8)
+
+```
+
+
+
+YOUR TURN: Make a causal claim about the increase in Kelce's followers
+
+- What is the outcome? the number of followers
+- What is the treatment? what do you think caused the increase
+- What are the two counterfactual states of the world under treatment vs. not under treatment?
+
+
+Is this a Taylor Swift effect? 
+
+- How could we prove it? What are possible confounders?
+    + Maybe it's just the effect of playing a game on Sunday?
+    + Maybe all NFL players experienced a similar increase?
+    + Maybe Kelce had a particularly good game relative to other players?
+
+![](images/kelce.png)
+
+
 ### Example: Social Mobility Data
 
 Since the onset of the pandemic in 2020, researchers have evaluated attitudinal and behavioral responses to policy changes, political messages, and COVID case/hospitalization/death rates.
