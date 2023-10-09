@@ -54,8 +54,7 @@ We got all of the answers with just one chunk of code!
 
 ## The anatomy of a loop
 
-*A short video introduction to the anatomy of a loop*
-{{< video src="https://www.youtube.com/watch?v=RDsnhVpM1To" >}}
+*A short video introduction to the anatomy of a loop* {{< video src="https://www.youtube.com/watch?v=RDsnhVpM1To" >}}
 
 In many situations, we want to repeat the same calculations with different inputs. Loops allow you to avoid writing many similar code chunks.
 
@@ -129,7 +128,9 @@ for(i in 1:length(somenumbers)){
 }
 ```
 
-      where `1:length(somenumbers)` reflects possible values `i` will take 
+```         
+  where `1:length(somenumbers)` reflects possible values `i` will take 
+```
 
 ```{r}
 1:length(somenumbers)
@@ -225,9 +226,7 @@ adjustedpollresults
 
 ## Application: U.S. Supreme Court
 
-*A video explainer of the loop in this section*
-{{< video src="https://www.youtube.com/watch?v=Ij9YWgUQg_s" >}}
-
+*A video explainer of the loop in this section using a similar dataset that goes through 2020. We now have data going through 2021!* {{< video src="https://www.youtube.com/watch?v=Ij9YWgUQg_s" >}}
 
 The Court has changed a lot recently in its composition (and will continue to do so next term).
 
@@ -259,21 +258,21 @@ Why does the median matter? A refresher on the Court
 
 Let's load and explore our data.
 
--   `term`: is the year of the SC (1991-2020 except for 2005),
+-   `term`: is the year of the SC (1991-2021 except for 2005),
 -   `justiceName`: contains the name of the Justice, and\
 -   `post_mn`: includes the "ideal point"-- this is the estimated ideology
 
 Martin-Quinn Scores assess ideology based on how judges "cluster" together in their voting patterns. Every Justice gets an ideology score, and this score can change each SC term (year) they are on the Court. Higher scores are more conservative justices, and lower, more liberal. More information is available at the [MQScores website](http://mqscores.lsa.umich.edu/measures.php)
 
 ```{r, include=F}
-justices <- read.csv("data/justices20.csv", stringsAsFactors = T)
+justices <- read.csv("data/justices23.csv", stringsAsFactors = T)
 ```
 
 ```{r, eval=F}
-justices <- read.csv("justices20.csv", stringsAsFactors = T)
+justices <- read.csv("justices23.csv", stringsAsFactors = T)
 
 ## alternative
-justices <- read.csv("https://raw.githubusercontent.com/ktmccabe/teachingdata/main/justices20.csv", stringsAsFactors = T)
+justices <- read.csv("https://raw.githubusercontent.com/ktmccabe/teachingdata/main/justices23.csv", stringsAsFactors = T)
 ```
 
 We are going to make the name variable a character class. This will make R treat the names as raw text rather than valued categories. This will be useful later on in the application.
@@ -305,7 +304,7 @@ We see a conservative shift at the end of the plot. However, we cannot tell whet
 
 Loops to the rescue!
 
-We will start our process by definding the meat of the operation.
+We will start our process by defining the meat of the operation.
 
 -   We want to find the median SC Justice for each term. To get started, let's pretend we only have to find the median Supreme Court Justice for one term.
 
