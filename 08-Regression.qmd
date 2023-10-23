@@ -111,13 +111,13 @@ plot(x=baseball$OBP,
 abline(fit, col="purple", lwd=3)
 ```
 
-The regression model is $Y = \alpha + \beta X + \epsilon$. Let's demystify this.
+The regression model is $Y = \alpha + \beta X + \epsilon$. Let's demystify this. See also this interactive tutorial: https://ellaudet.iq.harvard.edu/linear_model.
 
 -   A regression model describes the relationship between one or more independent variables $X$ (explanatory variables) and an outcome variable $Y$ (dependent variable)
     -   For example, the relationship between our independent variable, On Base Percentage, and our dependent variable, Runs Scored
 -   We want to know what happens with our dependent variable $Y$ if our independent variable $X$ increases.
     -   As we increase our On Base Percentage, a regression model will help us estimate how much we should expect our Runs Scored to increase (or decrease)
--   $\alpha$ and $\beta$ are considered "parameters" -- things we don't know but want to estimate. These two numbers will define exactly how we think $X$ and $Y$ are related.
+-   $\alpha$ and $\beta$ are considered "parameters" -- things we don't know but want to estimate. These two numbers will define exactly how we think $X$ and $Y$ are related (the shape of the line).
 -   No two variables are perfectly related, so we also have the $\epsilon$ term, which describes the error in the model
 
 When we have data, we estimate $Y$, $\alpha$, and $\beta$: $\hat Y = \hat \alpha + \hat \beta X$.
@@ -143,14 +143,14 @@ When we have data, we estimate $Y$, $\alpha$, and $\beta$: $\hat Y = \hat \alpha
 coef(fit)
 ```
 
-The first coefficient is $\hat \alpha$, this represents the intercept -- the estimated value our dependent variable will take if our independent variable is 0.
+The first coefficient is $\hat \alpha$, this represents the intercept -- the estimated value our dependent variable will take if our independent variable ($x$) is 0.
 
 -   The value the estimated runs scored would be if a team had a 0.000 on base percentage. In our case, this value is estimated to be negative, which is impossible (but it would also be unusual for a team to have a 0.000 on base percentage). Therefore, the intercept isn't inherently substantively interesting to us.
 
-The second coefficient is $\hat \beta$ is the slope This represents the expected change in our dependent variable for a 1-unit increase in our independent variable.
+The second coefficient is $\hat \beta$ is the slope This represents the **expected change in our dependent variable for a 1-unit increase in our independent variable**.
 
--   For example, if we go from a 0.000 on base percentage to a 1.000 on base percentage, we would expect a 5490.4 increase in runs scored.
--   Note: slope can be positive or negative similar to correlation.
+-   For example, if we go from a 0.000 on base percentage to a 1.000 on base percentage, we would expect a 5490.4 increase in runs scored!
+-   Note: slope can be positive or negative similar to correlation ... BUT ...
 -   Note: slope is in the units of the dependent variable (e.g., runs). It is not constrained to be between -1 and 1.
 -   It is telling us that the greater the OBP, the better!
 
