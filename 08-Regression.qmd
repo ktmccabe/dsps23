@@ -21,7 +21,7 @@ Regression is used across many domains for prediction and classification, from f
 
 Using data to predict reality TV outcomes.
 
-![](images/bach1.png){width="40%"} ![](images/bach2.jpeg){width="40%"}
+![](images/bach1.png){width="40%"} ![](images/bachinp.png){width="40%"}
 
 In politics, we might use regression to build campaign models-- predicting which voters are persuadable, which supporters will volunteer at campaign events, which supporters will turn out to vote, etc.
 
@@ -78,9 +78,9 @@ plot(x=baseball$RS,
 
 What the A's noticed is that a team's On Base Percentage is also highly correlated with runs scored. This aligns with conventional wisdom. Players get a lot of hype when they achieve a high OBP.
 
-![](images/kih.png)
+![](images/harper.png)
 
-Hernandez is hitting .500 (16-for-32) with five homers, four doubles, nine RBI, nine runs scored and a .514 on-base percentage in seven postseason games.- NBC Boston
+Harper is one of only 11 players with at least 100 plate appearances and a postseason on base percentage plus slugging percentage greater than 1.000. - USA Today
 
 This correlation shows up in our data, too.
 
@@ -124,7 +124,7 @@ When we have data, we estimate $Y$, $\alpha$, and $\beta$: $\hat Y = \hat \alpha
 
 -   The ${\hat{hat}}$ over the letters means those are our estimated values.
 
-In R, the regression syntax is `fit <- lm(y ~ x, data = mydata)`
+In R, the regression syntax is similar to what we use in making a boxplot: `fit <- lm(y ~ x, data = mydata)`
 
 -   `fit` is just whatever you want to call the output of the model,
 -   `y` is the name of the dependent variable,
@@ -749,7 +749,7 @@ fit2 <- lm(VP ~ G*I +  DUR, data = fair)
 
 #### Challenge
 
-Can you build a better model? What would your prediction for 2020 be?
+Can you build a better model? What would your prediction for 2020 have been?
 
 -   -5.07: growth rate of real per capita GDP in the first 3 quarters of 2020 (annual rate) (G)
 -   1.80: growth rate of the GDP deflator in the first 15 quarters of the Trump administration, (annual rate) (P)
