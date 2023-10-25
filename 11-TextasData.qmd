@@ -60,9 +60,7 @@ library(stringr)
 
 *For a video explainer of the code for the State of the Union application on pre-processing text and dictionary analysis, see below. (Via youtube, you can speed up the playback to 1.5 or 2x speed.)*
 
-
 {{< video src="https://www.youtube.com/watch?v=-9rB6uOih34" >}}
-
 
 The `sotu` package includes a dataset with the text of every U.S. State of the Union speech. It also includes second dataset with information about the speech. When datasets are stored in a package, you can add them to your environment through the `data()` function.
 
@@ -283,243 +281,107 @@ APIs can make a social scientist's life easier by providing an efficient way to 
 
 However, because researchers cannot control the API, the downside is at any given time, an organization could change or remove API access. Researchers might also not have the full details of what information is included in the API, potentially leading to biased conclusions from the data. APIs are great, but we should use them with caution.
 
-***Because the APIs require you to sign up for access (giving away your information), this course will not require that you gain access or use the APIs***
+## The Politics of Song Choice
 
-### Twitter API v1
+When deciding to run for office, political candidates often think strategically about how to introduce themselves. In the lead up to the 2024 presidential election in the United States, several Republicans announced their candidacy for the primary nomination.
 
-Let's try an example working with a Twitter API. To use this version of the Twitter API with R, you need
+As this article in [The Hill](https://thehill.com/blogs/in-the-know/4189303-mr-brightside-shake-it-off-jolene-among-2024-candidates-favorite-songs/) notes, oftentimes, the candidate celebrates their announcement with a theme song / walkout music / or common song they bring with them on the campaign trail. [Politico](https://www.politico.com/news/magazine/2023/09/06/top-20-songs-chris-christie-nikki-haley-will-hurd-cornel-west-00113795) went even further to ask candidates to submit their top 20 songs. Only some candidates responded, and in this application, we will analyze the playlists of some of the top candidates who submitted their song choices: Chris Christie, Nikki Haley, and Vivek Ramaswamy.
 
-1.  To create a Twitter account (you don't need to tweet from the account, just need an account)
-2.  An internet connection
-3.  To install the `rtweet` package
+We will analyze some of these songs drawing on the Spotify API.
+
+### Setting Up the Spotify API
+
+In order to follow along completely with the Spotify portion, you will need 1) a free account on Spotify https://open.spotify.com/, 2) a developer's app on Spotify, and the 3) `spotifyR` package installed in RStudio.
+
+After signing up for a free Spotify account, let's create the developer's app by 
+
+-  going to https://developer.spotify.com/dashboard when you are signed in. 
+- Select "Create app"
+    - Give your app a name (can be anything) and description (e.g., For conducting political analysis)
+    - Set a redirect URI-- this won't matter much for our purposes, so you can use http://localhost:1410/.
+    - You can leave "website" blank
+    - Mark the check box for Web API
+
+![](images/spotapi.png){width=50%}
+
+After "saving" the information, click on the "Settings" for the app, where you can view your Client ID and a button called, "View client secret." We will use these in a moment. Note: do not share these with anyone. Treat these like passwords.
+
+To R we go! We will access the Spotify API through an R package `spotifyr`. The first time you use this package, you will need to install it.
+```{r, eval=F}
+install.packages('spotifyr')
+```
+
+Every other time, you will need to use the following code:
+
+```{r}
+library(spotifyr)
+```
+
+Now, we need to "authenticate" our connection with Spotify using our Client ID and Client Secret credentials. Replace the xxxxxxx's below with your own credentials and generate the `access_token` which will be stored in your RStudio environment.
 
 ```{r, eval=F}
-install.packages("rtweet")
+Sys.setenv(SPOTIFY_CLIENT_ID ='xxxxxxxxx')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'xxxxxxxxxx')
+auth_object <- get_spotify_authorization_code(scope = scopes()[c(7,8,9,10,14,15)])
 ```
 
-Let's open the package
+### Candidate Danceability and Valence
 
-```{r, message=F, warning=F}
-library(rtweet)
+Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to "cache" your credentials. If you are on your personal machine, this should be fine, and you can select 1 and hit enter/return in your bottom-left RStudio Console window.
+
+![](images/cachespot.png){width=40%}
+
+
+```{r, eval=FALSE}
+candidates <- get_playlist_audio_features(username="Politico",
+                            playlist_uris = c("26rVnB3MN03kRyXXWwAne0", "6gk4Omuze4zSr1G2nK1nQ4","2kGJsgdiexWTVlWnTdGSIi"))
 ```
 
-The API sets guidelines about what and how much information a person can collect from Twitter over a particular duration of time. With the version of the API we are working with, we can collect a few thousand of the most recent tweets of any public user and search recent tweets (past few days) on Twitter that include keywords.
-
--   Twitter has other versions of the API that academic researchers can apply to for broader access, including access to older tweets (e.g., if you wanted to study tweets during the 2020 election). Researchers have developed a separate R package for working with this broader API.
-
-#### Searching tweets for keywords.
-
-The first time you use a function from `rtweet`, R will prompt you to authenticate and authorize an "app" through your Twitter account. Essentially, a web browser on your computer should automatically open to a Twitter landing page asking you to hit the "authorize" button. Once you do this, then you should be able to return to R and work with the R functions. (This is why you need a Twitter account and an internet connection to work with this package.)
-
-We can use the `search_tweets` function to search recent tweets that contain keywords. We can specify the number of tweets to extract with the `n` argument. We can also filter tweets with additional arguments, such as by limiting tweets to English tweets or omitting retweets.
-
-```{r, eval=F}
-## simple keyword search
-taylortweets <-search_tweets("taylorswift", n=1000)
-
-## use ' ' to search for exact phrase
-worldcuptweets <-search_tweets('"world cup"', n=1000)
-
-## use OR between words to search for tweets with at least one of the key words
-f1tweets <- search_tweets('"daniel ricciardo" OR "lando norris"', n=500)
-
-## just keep a space between words, no extra quotes to search for tweets that include both words somewhere
-bachtweets <- search_tweets("bachelorette gabby", n=400)
-
-## limit tweets to include only english tweets
-coronatweets <- search_tweets("coronavirus OR COVID", n=200, lang = "en")
-
-## omit retweets, may affect total n extracted
-scotustweets <- search_tweets("scotus", n=200, include_rts = FALSE)
+```{r, echo=FALSE}
+load("data/candidates.RData")
 ```
 
-The resulting object we created with the first search, `taylortweets`, is a dataframe and includes the 1000 tweets we requested to extract along with 90 variables of information about those tweets. A few notable variables:
+Let's compare the candidates on a few metrics, including danceability and valence.
 
--   `screen_name`: the screen name of the twitter user
--   `text`: the text of the tweet
--   `is_retweet`: an indiactor TRUE or FALSE indicating if the tweet was a retweet
--   `favorite_count`: the number of times the tweet was favorited (liked)
--   `followers_count`: number of followers the user has
--   `friends_count`: number of users that the tweeter follows
--   `statuses_count`: the number of tweets from the user
--   `verified`: an indicator TRUE or FALSE indicating if the user is verified
--   `lang`: language of the tweet
-
-#### Extracting user timeline
-
-Here is an example of extracting tweets from a particular user. You cane extract up to 3200 recent tweets of a specified public user. If you try to extract tweets from several users at once, you might hit a "rate limit" indicating that you requested more information than allowed over a particular period of time.
-
-```{r, eval=F}
-## extracting tweets from potus
-bidentweets <- get_timeline("potus", n=3200)
-
-## extracting tweets from potus
-polleaders <- c("potus", "vp")
-poltweets <- get_timeline(polleaders, n=3200)
+```{r}
+boxplot(danceability~playlist_name, data=candidates, horizontal=TRUE, las=1, 
+        names = c("Christie", "Haley",
+                                                                                "Ramaswamy"), 
+        xlab="Danceability", ylab="",
+        cex.axis=.6)
 ```
 
-Similar to the keyword tweets, the object created will provide the text of the tweets and information about the reactions to the tweets.
+
+
+```{r}
+boxplot(valence~playlist_name, data=candidates, horizontal=TRUE, las=1, 
+        names = c("Christie", "Haley",
+                                                                                "Ramaswamy"), 
+        xlab="Valence", ylab="",
+        cex.axis=.6)
+```
+
+```{r}
+vivek <- subset(candidates, playlist_name = "Vivek Ramaswamy's Top 8 Songs")
+
+vivek$track.name[vivek$valence == min(vivek$valence)]
+```
+
 
 ### Saving R Objects
 
-After you extract an tweets from online, you may want to save them as a hard data file on your computer. This way if you close RStudio, you can recover the tweets without needing to extract new tweets from Twitter.
+After you extract data from online, you may want to save them as a hard data file on your computer. This way if you close RStudio, you can reproduce the data.
 
 R allows you to save any R object as an .RData file that can be opened with the `load()` command. This is discussed on pg. 24 of QSS [Chapter 1](https://assets.press.princeton.edu/chapters/s11025.pdf).
 
-We can demonstrate this now by saving `taylortweets` as an RData object. It will automatically save to your working directory, but you can also add a subfolder or alternative file path.
+We can demonstrate this now by saving `candidates` as an RData object. It will automatically save to your working directory, but you can also add a subfolder or alternative file path.
 
 ```{r, eval=F}
-save(taylortweets, file = "taylortweets.RData")
-```
-
-Prior to saving the file, you could consider limiting the number of variables you want to save if you didn't want to store 90 variables. Example of keeping only 5 variables:
-
-```{r, eval=F}
-taylortweets <- taylortweets[, c("user_id", "screen_name", "text", "created_at", "is_retweet")]
-save(taylortweets, file = "taylortweets.RData")
+save(candidates, file = "candidates.RData")
 ```
 
 Then, you can load the file (if you happen to close R/RStudio, restart your computer, etc.) with the load command.
 
 ```{r, eval=FALSE}
-load("taylortweets.RData")
+load("candidates.RData")
 ```
-
-## Application: Sentiment Analysis
-
-In this example we will conduct a sentiment analysis of tweets extracted through the Twitter API.
-
--   You can use dataset provided on Canvas or extract your own tweets
--   To extract your own, you need a Twitter account and `rtweet` installed.
-
-Using tweets in political science?
-
-Research on Twitter is actually pretty common in the social sciences, including political science. Part of the reason for this is the access Twitter provides via API, which makes it an easier platform to study.
-
-Below are some examples of uses of Twitter data in social science research.
-
--   Scholars are often interested in characterizing the tone, such as incivility or toxicity, in online political discussions.
--   They may also use Twitter as a mechanism to study interactions between the public and elected officials and other public figures, as well as studying how politicians use Twitter as a form of strategic communication.
--   Political communications scholars have studied the extent to which journalists use Twitter to interpret public opinion, as well as study how media can control and set the agenda of what people discuss on Twitter.
-
-When doing political science research on Twitter, we should be careful about how we generalize the results to other settings. There is some evidence from Bor and Peterson that those who demonstrate incivility in offline discussions carry that behavior to online settings, there are other ways that someone's behavior on Twitter will not match their behavior in other settings or represent their underlying throughts or beliefs.
-
-![](images/polinciv.png){width="45%"} ![](images/brevity.png){width="45%"}
-
-![](images/hatedisc.png){width="45%"} ![](images/poljourn.png){width="45%"}
-
-![](images/borpet.png){width="45%"} ![](images/attention.png){width="45%"}
-
-*For a video explainer of the code in this section, see below. (Via youtube, you can speed up the playback to 1.5 or 2x speed.)*
-
-{{< video src="https://www.youtube.com/watch?v=XYc82CFjDWU" >}}
-
-For this example, we need the `rtweet` and `syuzhet` packages.
-
-```{r eval=F}
-install.packages("rtweet") # for extracting tweets
-install.packages("syuzhet") # for late sentiment analysis
-```
-
-In R, we open the packages with `library()`.
-
-```{r, message=F, warning=F}
-library(rtweet)
-library(syuzhet)
-```
-
-### Searching tweets for keywords
-
-We will first `search` recent tweets for keywords. The first time you use the package, it will open up an authentication browser asking you to "authorize" the Twitter app. This is giving you access to the API.
-
--   See the details above in the course notes for the syntax of this function.
-
-```{r, eval=F}
-politicstweets <- search_tweets("political OR partisan", n=2000)
-thanksgivingtweets <- search_tweets("thanksgiving", n=2000)
-```
-
-After you create the tweets, you can save them as an RData file on your computer so that you don't lose them when you close R.
-
-```{r eval=F}
-save(politicstweets, file="politicstweets.RData")
-save(thanksgivingtweets, file="thanksgivingtweets.RData")
-```
-
-These can then be loaded back into R at anytime.
-
-```{r, includel=F}
-load("data/politicstweets.RData")
-load("data/thanksgivingtweets.RData")
-```
-
-```{r, eval=F}
-load("politicstweets.RData")
-load("thanksgivingtweets.RData")
-```
-
-### Sentiment Analysis Overview
-
-Oftentimes, beyond characterizing the length or topic of a set of text, we might want to know the tone of the text. There are many ways to measure tone or "sentiment." One approach extends what we did with dictionary analysis.
-
--   Researchers have developed dictionaries of words that are typically associated with positive or negative sentiment. We will use the `bing` dictionary.
--   Sometimes, researchers go so far as to create dictionaries for discrete emotions (e.g., happiness) or other types of measures, such as toxicity levels or hate speech.
--   Using these pre-existing dictionaries, we can then count how many words in a body of text have positive vs. negative tone to summarize the sentiment of a document.
-
-Like any dictionary analysis, there are limitations to this "bag of words" approach-- looking at the words individually without considering the context in which they are mentioned.
-
-### Implementing sentiment analysis
-
-The `get_sentiment()` function will calculate the net positive - negative score of a piece of text according to a specified dictionary. We can store this as a new variable.
-
-```{r}
-politicstweets$sentiment <- get_sentiment(politicstweets$text, 
-                                          method="bing")
-thanksgivingtweets$sentiment <- get_sentiment(thanksgivingtweets$text, 
-                                              method="bing")
-
-## Example output
-politicstweets$sentiment[1:10]
-```
-
-Let's compare the sentiment of these sets of tweets to help answer the question: Should we talk about politics at Thanksgiving dinner?
-
-We add a plotting concept: Plotting multiple plots.
-
-```{r}
-## Set par
-par(mfrow = c(1, 2)) # 1 row with 2 plots
-## Plot just the first object
-hist(politicstweets$sentiment, 
-     xlab="Sentiment (bing score)",
-     main="Sentiment Scores for Politics Tweets",
-     cex.main=.7,
-     ylim = c(0, 800),
-     xlim = c(-8, 8),
-     border= F)
-## Add lines for the mean sentiment
-abline(v=mean(politicstweets$sentiment), lwd=2)
-
-## Second plot
-hist(thanksgivingtweets$sentiment, 
-     xlab="Sentiment (bing score)",
-     main="Sentiment Scores for Thanksgiving Tweets",
-     cex.main = .7, col="pink",
-     ylim = c(0, 800),
-     xlim = c(-8, 8),
-     border= F)
-abline(v=mean(thanksgivingtweets$sentiment), lwd=2)
-
-```
-
-### Your Twitter Analysis
-
-As mentioned above We can also search the most recent 3200 tweets of a given user.
-
-Here we extract tweets from AOC's Twitter account
-
-```{r, eval=F}
-aoctweets <- get_timeline("aoc", n=3200)
-```
-
-As a challenge, conduct your own analysis of the congresswoman's tweets. It could be a sentiment analysis, or you could use one or more tools from the previous sections on text analysis.
