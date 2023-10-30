@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Assist in reading large amounts of text</li>
 </ul>
-<p><img src="images/greg1.png" class="img-fluid" style="width:40.0%"> <img src="images/greg2.png" class="img-fluid" style="width:40.0%"></p>
+<p><img src="images/greg1.jpg" class="img-fluid" style="width:40.0%"> <img src="images/greg2.jpg" class="img-fluid" style="width:40.0%"></p>
 <ul>
 <li>Efficiently summarize text through quantifying text attributes</li>
 <li>(Can) remove some subjectivity in coding text, allow to discover aspects of text unknown a priori</li>
@@ -659,7 +659,7 @@ Docs  among
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>candidates <span class="ot">&lt;-</span> <span class="fu">get_playlist_audio_features</span>(<span class="at">username=</span><span class="st">"Politico"</span>,</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">playlist_uris =</span> <span class="fu">c</span>(<span class="st">"26rVnB3MN03kRyXXWwAne0"</span>, <span class="st">"6gk4Omuze4zSr1G2nK1nQ4"</span>,<span class="st">"2kGJsgdiexWTVlWnTdGSIi"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s compare the candidates on a few metrics, including danceability and valence using a boxplot.</p>
+<p>Let’s compare the candidates on a few metrics, including danceability (how suitable a track is to dancing from 0 to 1) and valence (musical positiveness from 0 to 1- whether a song is likely to make someone feel happy/cheerful, higher valence, or sad/depressed/angry, lower valence) using a boxplot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(danceability<span class="sc">~</span>playlist_name, <span class="at">data=</span>candidates, <span class="at">horizontal=</span><span class="cn">TRUE</span>, <span class="at">las=</span><span class="dv">1</span>, </span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Christie"</span>, <span class="st">"Haley"</span>,</span>
@@ -681,7 +681,7 @@ Docs  among
 <p><img src="11-TextasData_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Wow, there is one song from Ramaswamy that has particularly low valence. Which song was this, and was it something the candidate emphasized?</p>
+<p>Wow, there is one song from Ramaswamy that has particularly low valence. Which song was this, and was it something the candidate emphasized? Yes! His Eminem moment.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>vivek <span class="ot">&lt;-</span> <span class="fu">subset</span>(candidates, <span class="at">playlist_name =</span> <span class="st">"Vivek Ramaswamy's Top 8 Songs"</span>)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
