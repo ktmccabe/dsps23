@@ -15,6 +15,10 @@ book:
     - 06-Loops.qmd
     - 07-Prediction.qmd
     - 08-Regression.qmd
+    - 09-Fairness.qmd
+    - 10-Uncertainty.qmd
+    - 11-TextasData.qmd
+    - 12-Maps.qmd
   page-navigation: true
   downloads: pdf
   sidebar:

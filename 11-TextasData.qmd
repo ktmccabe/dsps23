@@ -29,7 +29,7 @@ Article from [NY Times](https://www.nytimes.com/interactive/2016/06/13/us/politi
 
 -   Assist in reading large amounts of text
 
-![](images/greg1.png){width="40%"} ![](images/greg2.png){width="40%"}
+![](images/greg1.jpg){width="40%"} ![](images/greg2.jpg){width="40%"}
 
 -   Efficiently summarize text through quantifying text attributes
 -   (Can) remove some subjectivity in coding text, allow to discover aspects of text unknown a priori
@@ -293,20 +293,21 @@ We will analyze some of these songs drawing on the Spotify API.
 
 In order to follow along completely with the Spotify portion, you will need 1) a free account on Spotify https://open.spotify.com/, 2) a developer's app on Spotify, and the 3) `spotifyR` package installed in RStudio.
 
-After signing up for a free Spotify account, let's create the developer's app by 
+After signing up for a free Spotify account, let's create the developer's app by
 
--  going to https://developer.spotify.com/dashboard when you are signed in. 
-- Select "Create app"
-    - Give your app a name (can be anything) and description (e.g., For conducting political analysis)
-    - Set a redirect URI-- this won't matter much for our purposes, so you can use http://localhost:1410/.
-    - You can leave "website" blank
-    - Mark the check box for Web API
+-   going to https://developer.spotify.com/dashboard when you are signed in.
+-   Select "Create app"
+    -   Give your app a name (can be anything) and description (e.g., For conducting political analysis)
+    -   Set a redirect URI-- this won't matter much for our purposes, so you can use http://localhost:1410/.
+    -   You can leave "website" blank
+    -   Mark the check box for Web API
 
-![](images/spotapi.png){width=50%}
+![](images/spotapi.png){width="50%"}
 
 After "saving" the information, click on the "Settings" for the app, where you can view your Client ID and a button called, "View client secret." We will use these in a moment. Note: do not share these with anyone. Treat these like passwords.
 
 To R we go! We will access the Spotify API through an R package `spotifyr`. The first time you use this package, you will need to install it.
+
 ```{r, eval=F}
 install.packages('spotifyr')
 ```
@@ -329,8 +330,9 @@ auth_object <- get_spotify_authorization_code(scope = scopes()[c(7,8,9,10,14,15)
 
 Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to "cache" your credentials. If you are on your personal machine, this should be fine, and you can select 1 and hit enter/return in your bottom-left RStudio Console window.
 
-![](images/cachespot.png){width=40%}
+![](images/cachespot.png){width="40%"}
 
+We will retrieve the playlists from the candidates by providing the function `get_playlist_audio_features()` with the Spotify identifiers for each playlist. We store it in a dataframe object called `candidates`.
 
 ```{r, eval=FALSE}
 candidates <- get_playlist_audio_features(username="Politico",
@@ -341,7 +343,7 @@ candidates <- get_playlist_audio_features(username="Politico",
 load("data/candidates.RData")
 ```
 
-Let's compare the candidates on a few metrics, including danceability and valence.
+Let's compare the candidates on a few metrics, including danceability (how suitable a track is to dancing from 0 to 1) and valence (musical positiveness from 0 to 1- whether a song is likely to make someone feel happy/cheerful, higher valence, or sad/depressed/angry, lower valence) using a boxplot.
 
 ```{r}
 boxplot(danceability~playlist_name, data=candidates, horizontal=TRUE, las=1, 
@@ -351,7 +353,7 @@ boxplot(danceability~playlist_name, data=candidates, horizontal=TRUE, las=1,
         cex.axis=.6)
 ```
 
-
+We can also compare the "valence" of songs by candidate.
 
 ```{r}
 boxplot(valence~playlist_name, data=candidates, horizontal=TRUE, las=1, 
@@ -361,11 +363,18 @@ boxplot(valence~playlist_name, data=candidates, horizontal=TRUE, las=1,
         cex.axis=.6)
 ```
 
+
+Wow, there is one song from Ramaswamy that has particularly low valence. Which song was this, and was it something the candidate emphasized? Yes! His Eminem moment.
+
 ```{r}
 vivek <- subset(candidates, playlist_name = "Vivek Ramaswamy's Top 8 Songs")
 
 vivek$track.name[vivek$valence == min(vivek$valence)]
 ```
+
+
+{{< video src="https://www.youtube.com/watch?v=QXSMEhdMfTU" >}}
+
 
 
 ### Saving R Objects

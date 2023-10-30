@@ -1,0 +1,451 @@
+# Text as Data {#text}
+
+Recall that we said, four primary goals of social science include:
+
+-   **Describe** and measure
+    -   Has the U.S. population increased?
+-   **Explain**, evaluate, and recommend (study of causation)
+    -   Does expanding Medicaid improve health outcomes?
+-   **Predict**
+    -   Who will win the next election?
+-   **Discover**
+    -   How do policies diffuse across states?
+
+In this section, we start to explore the goal of discovery, seeing what we can learn from text as data.
+
+## Why text?
+
+Words (can) matter. Patterns of word usage can be suggestive of deeper divides.
+
+![](images/deadspin.png){width="80%"}
+
+Article from [Deadspin](https://deadspin.com/which-words-are-used-to-describe-white-and-black-nfl-pr-1573683214)
+
+![](images/wordsmass.png)
+
+Article from [NY Times](https://www.nytimes.com/interactive/2016/06/13/us/politics/politicians-respond-to-orlando-nightclub-attack.html)
+
+***Why Use R to analyze text?***
+
+-   Assist in reading large amounts of text
+
+![](images/greg1.jpg){width="40%"} ![](images/greg2.jpg){width="40%"}
+
+-   Efficiently summarize text through quantifying text attributes
+-   (Can) remove some subjectivity in coding text, allow to discover aspects of text unknown a priori
+
+## R Packages for text
+
+Packages are like apps on your phone. They give you additional functionality. To use the tools in a package you first have to install it.
+
+
+```{r, eval=F}
+install.packages("sotu", dependencies = T)
+install.packages("tm", dependencies = T)
+install.packages("SnowballC", dependencies = T)
+install.packages("wordcloud", dependencies = T)
+install.packages("stringr", dependencies = T)
+```
+
+
+After you install it, just like on a phone, anytime you want to use the app, you need to open it. In R, we do that with `library()`.
+
+
+```{r, message=F, warning=F}
+library(sotu)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(stringr)
+```
+
+
+## Application: State of the Union
+
+*For a video explainer of the code for the State of the Union application on pre-processing text and dictionary analysis, see below. (Via youtube, you can speed up the playback to 1.5 or 2x speed.)*
+
+
+{{< video src="https://www.youtube.com/watch?v=-9rB6uOih34" >}}
+
+
+
+The `sotu` package includes a dataset with the text of every U.S. State of the Union speech. It also includes second dataset with information about the speech. When datasets are stored in a package, you can add them to your environment through the `data()` function.
+
+
+```{r}
+data(sotu_meta)
+data(sotu_text)
+```
+
+
+We are going to "bind" these together into a new dataframe. That way, the `sotu_text` is a variable inside of our `speeches` dataframe.
+
+
+```{r}
+speeches <- cbind(sotu_meta, sotu_text)
+names(speeches)
+```
+
+
+### Cleaning Text
+
+Note that when working with raw text data, we usually do want our variables to be character variables and not factor variables. Here, every cell is not a category. Instead, it is a speech!
+
+
+```{r}
+class(speeches$sotu_text)
+```
+
+
+Text is messy data. We may want to spruce it up a bit by removing some of the non-essential characters and words, and moving everything to lowercase.
+
+
+```{r}
+## Example of speech
+speeches$sotu_text[1]
+```
+
+```{r}
+## clean text
+speeches$sotu_text <- tolower(speeches$sotu_text)
+speeches$sotu_text <- stripWhitespace(speeches$sotu_text)
+speeches$sotu_text <- removeWords(speeches$sotu_text, stopwords(kind="en"))
+speeches$sotu_text <- removePunctuation(speeches$sotu_text)
+speeches$sotu_text <- removeNumbers(speeches$sotu_text)
+#speeches$sotu_text <- stemDocument(speeches$sotu_text) # we will hold off
+```
+
+
+Note: What you might consider non-essential could differ depending on your application. Maybe you want to keep numbers in your text, for example.
+
+### Preparing a Corpus
+
+
+```{r}
+## turn text into corpus
+sotu.corpus <- Corpus(VectorSource(speeches$sotu_text))
+## turn into Document-Term-Matrix
+sotu.dtm <- DocumentTermMatrix(sotu.corpus)
+```
+
+```{r}
+## preview
+inspect(sotu.dtm[,10:20])
+```
+
+
+### Word Frequency
+
+Convert the "Document-Term-Matrix" into a matrix using `as.matrix()`
+
+
+```{r}
+sotu.dtm.mat <- as.matrix(sotu.dtm)
+
+## Most frequent words
+head(sort(sotu.dtm.mat[1,], decreasing=T), n=10)
+
+head(sort(sotu.dtm.mat[236,], decreasing=T), n=10)
+
+```
+
+
+Note: these are somewhat generic words.
+
+***Word Cloud***
+
+
+```{r}
+wordcloud(words=names(sotu.dtm.mat[1,]),
+          freq=sotu.dtm.mat[1,], max.words = 20)
+```
+
+
+## Word Importance
+
+We use tf-idf (term frequency - inverse document frequency) as a way to pull out uniquely important/relevant words for a given character.
+
+-   Relative frequency of a term inversely weighted by the number of documents in which the term appears.
+-   Functionally, if everyone uses the word "know," then it's not very important for distinguishing characters/documents from each other.
+-   We want words that a speech used frequently, that other speeches use less frequently
+
+
+```{r}
+## words uniquely important to a character
+sotu.tfidf <- weightTfIdf(sotu.dtm)
+
+## convert to matrix
+sotu.tfidf.mat <- as.matrix(sotu.tfidf)
+
+```
+
+
+We can summarize the uniquely relevant words for each speech
+
+
+```{r}
+Gw1790.tfidf <-head(sort(sotu.tfidf.mat[1,], decreasing=T), n=8)
+BO2016.tfidf <-head(sort(sotu.tfidf.mat[236,], decreasing=T), n=8)
+```
+
+```{r}
+Gw1790.tfidf
+```
+
+```{r}
+barplot(Gw1790.tfidf, cex.axis=.7,
+         cex.names=.7,
+        main= "Most `Important' 1790 SOTU Words (tf-idf)", 
+        horiz = T, las=2)
+barplot(BO2016.tfidf,
+         cex.names=.7, cex.axis=.7,
+        main= "Most `Important' 2016 SOTU Words (tf-idf)", 
+        horiz=T, las=2)
+```
+
+
+## Additional Descriptive Statistics
+
+Are the length of speeches changing? The `nchar()` function tells you the number of characters in a "string."
+
+
+```{r}
+speeches$speechlength <- nchar(speeches$sotu_text)
+```
+
+
+Let's plot the length of speeches over time and annotate with informative colors and labels.
+
+Is the length of speeches changing?
+
+
+```{r}
+plot(x=1:length(speeches$speechlength), y= speeches$speechlength, 
+    pch=15,
+     xaxt="n",
+     xlab="", 
+     ylab = "Number of Characters")
+
+## add x axis
+axis(1, 1:length(speeches$speechlength), labels=speeches$year, las=3, cex.axis=.7)
+```
+
+
+We can add color to distinguish written vs. spoken speeches
+
+
+```{r}
+speechcolor <- ifelse(speeches$sotu_type == "written", "black", "green3")
+plot(x=1:length(speeches$speechlength), y= speeches$speechlength, 
+     xaxt="n", pch=15,
+     xlab="", 
+     ylab = "Number of Characters",
+     col = speechcolor)
+
+## add x axis
+axis(1, 1:length(speeches$speechlength), labels=speeches$year, las=3, cex.axis=.7)
+
+## add legend
+legend("topleft", c("spoken", "written"), 
+       pch=15, 
+       col=c("green3", "black"), bty="n")
+```
+
+
+### Dictionary Analysis
+
+We can characterize the content of speeches in different ways. For example, we can see if speeches mention specific words, such as \`"terrorism."
+
+-   The function `grepl()` lets you search for a pattern of text in a character string
+-   The function `str_detect()` works similarly with the opposite order of inputs
+
+
+```{r}
+speeches$terrorism <- ifelse(grepl("terror", speeches$sotu_text), 1,0)
+speeches$terrorism2 <- ifelse(str_detect(speeches$sotu_text,"terror"), 1,0)
+```
+
+```{r}
+sort(tapply(speeches$terrorism, speeches$president, sum), 
+     decreasing=T)[1:10]
+```
+
+
+We can characterize the content of speeches in different ways. For example, we can see if speeches mention specific words, such as "terrorism."
+
+-   The function `str_count()` counts the number of times a piece of text appears in a character string
+
+
+```{r}
+speeches$terrorismcount <- str_count(speeches$sotu_text, "terror")
+```
+
+```{r}
+sort(tapply(speeches$terrorismcount, speeches$president, sum), 
+     decreasing=T)[1:10]
+```
+
+
+We can add multiple words with the \| operator. This is often called a "dictionary analysis."
+
+
+```{r}
+speeches$warcount <- str_count(speeches$sotu_text, 
+                               "terror|war|military|drone")
+sort(tapply(speeches$warcount, speeches$president, sum), decreasing=T)[1:10]
+```
+
+
+What are possible limitations of this analysis?
+
+## Application Programming Interfaces
+
+Application programming interfaces (APIs) are tools that allow you to search a large database to extract specific types of information. Social scientists often work with APIs to extract data from social media platforms, government agencies (e.g., U.S. Census), and news sites, among others.
+
+Organizations that develop these APIs can control what types of information researchers can access. Often, they set limits on the types and quantities of information someone can collect. Companies also often monitor who accesses the information by requiring people to sign up for access, apply for access, and/or pay for access.
+
+***Example: Census API*** As an example of an API, the U.S. Census has an API that allows researchers to extract nicely formatted data summaries of different geographic units (e.g., all zip codes in the U.S.).
+
+-   Researchers can sign up [here](https://api.census.gov/data/key_signup.html) for an API "key" which allows the organization to monitor who is accessing what information.
+
+Researchers Kyle Walker and Matt Herman have made an R package that makes working with the API easier.
+
+-   Example: `tidycensus` found [here](https://walker-data.com/tidycensus/articles/basic-usage.html) allows you to search Census data by providing the variables you want to extract
+
+![](images/tidycensus.png){width="45%"}
+
+APIs can make a social scientist's life easier by providing an efficient way to collect data. Without an API, researchers might have to resort to manually extracting information from online or writing an ad hoc set of code to "scrape" the information off of websites. This can be time consuming, against an organization or company's policy, or even impossible in some cases. APIs are powerful and efficient.
+
+However, because researchers cannot control the API, the downside is at any given time, an organization could change or remove API access. Researchers might also not have the full details of what information is included in the API, potentially leading to biased conclusions from the data. APIs are great, but we should use them with caution.
+
+## The Politics of Song Choice
+
+When deciding to run for office, political candidates often think strategically about how to introduce themselves. In the lead up to the 2024 presidential election in the United States, several Republicans announced their candidacy for the primary nomination.
+
+As this article in [The Hill](https://thehill.com/blogs/in-the-know/4189303-mr-brightside-shake-it-off-jolene-among-2024-candidates-favorite-songs/) notes, oftentimes, the candidate celebrates their announcement with a theme song / walkout music / or common song they bring with them on the campaign trail. [Politico](https://www.politico.com/news/magazine/2023/09/06/top-20-songs-chris-christie-nikki-haley-will-hurd-cornel-west-00113795) went even further to ask candidates to submit their top 20 songs. Only some candidates responded, and in this application, we will analyze the playlists of some of the top candidates who submitted their song choices: Chris Christie, Nikki Haley, and Vivek Ramaswamy.
+
+We will analyze some of these songs drawing on the Spotify API.
+
+### Setting Up the Spotify API
+
+In order to follow along completely with the Spotify portion, you will need 1) a free account on Spotify https://open.spotify.com/, 2) a developer's app on Spotify, and the 3) `spotifyR` package installed in RStudio.
+
+After signing up for a free Spotify account, let's create the developer's app by
+
+-   going to https://developer.spotify.com/dashboard when you are signed in.
+-   Select "Create app"
+    -   Give your app a name (can be anything) and description (e.g., For conducting political analysis)
+    -   Set a redirect URI-- this won't matter much for our purposes, so you can use http://localhost:1410/.
+    -   You can leave "website" blank
+    -   Mark the check box for Web API
+
+![](images/spotapi.png){width="50%"}
+
+After "saving" the information, click on the "Settings" for the app, where you can view your Client ID and a button called, "View client secret." We will use these in a moment. Note: do not share these with anyone. Treat these like passwords.
+
+To R we go! We will access the Spotify API through an R package `spotifyr`. The first time you use this package, you will need to install it.
+
+
+```{r, eval=F}
+install.packages('spotifyr')
+```
+
+
+Every other time, you will need to use the following code:
+
+
+```{r}
+library(spotifyr)
+```
+
+
+Now, we need to "authenticate" our connection with Spotify using our Client ID and Client Secret credentials. Replace the xxxxxxx's below with your own credentials and generate the `access_token` which will be stored in your RStudio environment.
+
+
+```{r, eval=F}
+Sys.setenv(SPOTIFY_CLIENT_ID ='xxxxxxxxx')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'xxxxxxxxxx')
+auth_object <- get_spotify_authorization_code(scope = scopes()[c(7,8,9,10,14,15)])
+```
+
+
+### Candidate Danceability and Valence
+
+Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to "cache" your credentials. If you are on your personal machine, this should be fine, and you can select 1 and hit enter/return in your bottom-left RStudio Console window.
+
+![](images/cachespot.png){width="40%"}
+
+We will retrieve the playlists from the candidates by providing the function `get_playlist_audio_features()` with the Spotify identifiers for each playlist. We store it in a dataframe object called `candidates`.
+
+
+```{r, eval=FALSE}
+candidates <- get_playlist_audio_features(username="Politico",
+                            playlist_uris = c("26rVnB3MN03kRyXXWwAne0", "6gk4Omuze4zSr1G2nK1nQ4","2kGJsgdiexWTVlWnTdGSIi"))
+```
+
+```{r, echo=FALSE}
+load("data/candidates.RData")
+```
+
+
+Let's compare the candidates on a few metrics, including danceability (how suitable a track is to dancing from 0 to 1) and valence (musical positiveness from 0 to 1- whether a song is likely to make someone feel happy/cheerful, higher valence, or sad/depressed/angry, lower valence) using a boxplot.
+
+
+```{r}
+boxplot(danceability~playlist_name, data=candidates, horizontal=TRUE, las=1, 
+        names = c("Christie", "Haley",
+                                                                                "Ramaswamy"), 
+        xlab="Danceability", ylab="",
+        cex.axis=.6)
+```
+
+
+We can also compare the "valence" of songs by candidate.
+
+
+```{r}
+boxplot(valence~playlist_name, data=candidates, horizontal=TRUE, las=1, 
+        names = c("Christie", "Haley",
+                                                                                "Ramaswamy"), 
+        xlab="Valence", ylab="",
+        cex.axis=.6)
+```
+
+
+
+Wow, there is one song from Ramaswamy that has particularly low valence. Which song was this, and was it something the candidate emphasized? Yes! His Eminem moment.
+
+
+```{r}
+vivek <- subset(candidates, playlist_name = "Vivek Ramaswamy's Top 8 Songs")
+
+vivek$track.name[vivek$valence == min(vivek$valence)]
+```
+
+{{< video src="https://www.youtube.com/watch?v=QXSMEhdMfTU" >}}
+
+
+
+
+
+### Saving R Objects
+
+After you extract data from online, you may want to save them as a hard data file on your computer. This way if you close RStudio, you can reproduce the data.
+
+R allows you to save any R object as an .RData file that can be opened with the `load()` command. This is discussed on pg. 24 of QSS [Chapter 1](https://assets.press.princeton.edu/chapters/s11025.pdf).
+
+We can demonstrate this now by saving `candidates` as an RData object. It will automatically save to your working directory, but you can also add a subfolder or alternative file path.
+
+
+```{r, eval=F}
+save(candidates, file = "candidates.RData")
+```
+
+
+Then, you can load the file (if you happen to close R/RStudio, restart your computer, etc.) with the load command.
+
+
+```{r, eval=FALSE}
+load("candidates.RData")
+```
+
