@@ -194,7 +194,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, boxrule=0pt, interior hidden, frame hidden, breakable, sharp corners, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, interior hidden, breakable, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Section Contents}
 {
@@ -12147,8 +12147,8 @@ Times}
   Assist in reading large amounts of text
 \end{itemize}
 
-\includegraphics[width=0.4\textwidth,height=\textheight]{images/greg1.png}
-\includegraphics[width=0.4\textwidth,height=\textheight]{images/greg2.png}
+\includegraphics[width=0.4\textwidth,height=\textheight]{images/greg1.jpg}
+\includegraphics[width=0.4\textwidth,height=\textheight]{images/greg2.jpg}
 
 \begin{itemize}
 \tightlist
@@ -12799,6 +12799,11 @@ Console window.
 
 \includegraphics[width=0.4\textwidth,height=\textheight]{images/cachespot.png}
 
+We will retrieve the playlists from the candidates by providing the
+function \texttt{get\_playlist\_audio\_features()} with the Spotify
+identifiers for each playlist. We store it in a dataframe object called
+\texttt{candidates}.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{candidates }\OtherTok{\textless{}{-}} \FunctionTok{get\_playlist\_audio\_features}\NormalTok{(}\AttributeTok{username=}\StringTok{"Politico"}\NormalTok{,}
@@ -12807,7 +12812,10 @@ Console window.
 \end{Shaded}
 
 Let's compare the candidates on a few metrics, including danceability
-and valence.
+(how suitable a track is to dancing from 0 to 1) and valence (musical
+positiveness from 0 to 1- whether a song is likely to make someone feel
+happy/cheerful, higher valence, or sad/depressed/angry, lower valence)
+using a boxplot.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -12827,6 +12835,8 @@ and valence.
 
 \end{figure}
 
+We can also compare the ``valence'' of songs by candidate.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{boxplot}\NormalTok{(valence}\SpecialCharTok{\textasciitilde{}}\NormalTok{playlist\_name, }\AttributeTok{data=}\NormalTok{candidates, }\AttributeTok{horizontal=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{las=}\DecValTok{1}\NormalTok{, }
@@ -12845,6 +12855,10 @@ and valence.
 
 \end{figure}
 
+Wow, there is one song from Ramaswamy that has particularly low valence.
+Which song was this, and was it something the candidate emphasized? Yes!
+His Eminem moment.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{vivek }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(candidates, }\AttributeTok{playlist\_name =} \StringTok{"Vivek Ramaswamy\textquotesingle{}s Top 8 Songs"}\NormalTok{)}
@@ -12856,6 +12870,8 @@ and valence.
 \begin{verbatim}
 [1] "Lose Yourself"
 \end{verbatim}
+
+\url{https://www.youtube.com/watch?v=QXSMEhdMfTU}
 
 \hypertarget{saving-r-objects}{%
 \subsection{Saving R Objects}\label{saving-r-objects}}
