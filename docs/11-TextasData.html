@@ -637,7 +637,7 @@ Docs  among
 <p>After “saving” the information, click on the “Settings” for the app, where you can view your Client ID and a button called, “View client secret.” We will use these in a moment. Note: do not share these with anyone. Treat these like passwords.</p>
 <p>To R we go! We will access the Spotify API through an R package <code>spotifyr</code>. The first time you use this package, you will need to install it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'spotifyr'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'spotifyr'</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Every other time, you will need to use the following code:</p>
 <div class="cell">
@@ -652,7 +652,8 @@ Docs  among
 </section>
 <section id="candidate-danceability-and-valence" class="level3" data-number="11.7.2">
 <h3 data-number="11.7.2" class="anchored" data-anchor-id="candidate-danceability-and-valence"><span class="header-section-number">11.7.2</span> Candidate Danceability and Valence</h3>
-<p>Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to “cache” your credentials. If you are on your personal machine, this should be fine, and you can select 1 and hit enter/return in your bottom-left RStudio Console window.</p>
+<p>Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to “cache” your credentials.</p>
+<p>Select 1 by writing 1 where the cursor is in your bottom-left RStudio Console window and hit enter/return .</p>
 <p><img src="images/cachespot.png" class="img-fluid" style="width:40.0%"></p>
 <p>We will retrieve the playlists from the candidates by providing the function <code>get_playlist_audio_features()</code> with the Spotify identifiers for each playlist. We store it in a dataframe object called <code>candidates</code>.</p>
 <div class="cell">

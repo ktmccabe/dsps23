@@ -309,7 +309,7 @@ After "saving" the information, click on the "Settings" for the app, where you c
 To R we go! We will access the Spotify API through an R package `spotifyr`. The first time you use this package, you will need to install it.
 
 ```{r, eval=F}
-install.packages('spotifyr')
+install.packages('spotifyr', dependencies = TRUE)
 ```
 
 Every other time, you will need to use the following code:
@@ -328,7 +328,9 @@ auth_object <- get_spotify_authorization_code(scope = scopes()[c(7,8,9,10,14,15)
 
 ### Candidate Danceability and Valence
 
-Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to "cache" your credentials. If you are on your personal machine, this should be fine, and you can select 1 and hit enter/return in your bottom-left RStudio Console window.
+Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to "cache" your credentials. 
+
+Select 1 by writing 1 where the cursor is in your bottom-left RStudio Console window and hit enter/return .
 
 ![](images/cachespot.png){width="40%"}
 
@@ -363,7 +365,6 @@ boxplot(valence~playlist_name, data=candidates, horizontal=TRUE, las=1,
         cex.axis=.6)
 ```
 
-
 Wow, there is one song from Ramaswamy that has particularly low valence. Which song was this, and was it something the candidate emphasized? Yes! His Eminem moment.
 
 ```{r}
@@ -372,10 +373,7 @@ vivek <- subset(candidates, playlist_name = "Vivek Ramaswamy's Top 8 Songs")
 vivek$track.name[vivek$valence == min(vivek$valence)]
 ```
 
-
 {{< video src="https://www.youtube.com/watch?v=QXSMEhdMfTU" >}}
-
-
 
 ### Saving R Objects
 
