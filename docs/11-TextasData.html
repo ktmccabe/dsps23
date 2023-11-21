@@ -237,7 +237,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#setting-up-the-spotify-api" id="toc-setting-up-the-spotify-api" class="nav-link" data-scroll-target="#setting-up-the-spotify-api"><span class="header-section-number">11.7.1</span> Setting Up the Spotify API</a></li>
   <li><a href="#candidate-danceability-and-valence" id="toc-candidate-danceability-and-valence" class="nav-link" data-scroll-target="#candidate-danceability-and-valence"><span class="header-section-number">11.7.2</span> Candidate Danceability and Valence</a></li>
-  <li><a href="#saving-r-objects" id="toc-saving-r-objects" class="nav-link" data-scroll-target="#saving-r-objects"><span class="header-section-number">11.7.3</span> Saving R Objects</a></li>
+  <li><a href="#additional-tools" id="toc-additional-tools" class="nav-link" data-scroll-target="#additional-tools"><span class="header-section-number">11.7.3</span> Additional Tools</a></li>
+  <li><a href="#saving-r-objects" id="toc-saving-r-objects" class="nav-link" data-scroll-target="#saving-r-objects"><span class="header-section-number">11.7.4</span> Saving R Objects</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -649,17 +650,31 @@ Docs  among
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">SPOTIFY_CLIENT_SECRET =</span> <span class="st">'xxxxxxxxxx'</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>auth_object <span class="ot">&lt;-</span> <span class="fu">get_spotify_authorization_code</span>(<span class="at">scope =</span> <span class="fu">scopes</span>()[<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">14</span>,<span class="dv">15</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Troubleshooting</p>
+<ul>
+<li>Sometimes people get an error about not having “httpuv” installed. If that happens to you, you can also run <code>install.packages("httpuv")</code> and then retry using <code>library(spotifyr)</code> and running the setup code.</li>
+<li>If you get an error that says “cannot find function”, it may mean that <code>spotifyr</code> has not been installed or you have not yet run <code>library(spotifyr)</code>. Make sure to run these before using the functions below.</li>
+<li>If the <code>Sys.setenv</code> functions run properly, the first time you use them, they will likely open up a web browser page related to Spotify, asking you to agree to the terms of the API. Once you agree, it will say “Authentication complete.” If it does not run properly, it may open a web browser page that says “Invalid login” or something like that.To diagnose that error, I recommend doublechecking that you are
+<ul>
+<li>Signed into Spotify and the developer’s Spotify page on the web browser opened via the RStudio session</li>
+<li>That in the Settings page of your Spotify, you have entered the right redirect URI</li>
+<li>That in RStudio, you have entered the correct ClientID and Client Secret without any typos (no extra spaces or accidental “x” left over from when you pasted it)</li>
+<li>After checking these, you can also restart your R session and try again to get a fresh chance of authenticating the API.</li>
+</ul></li>
+</ul>
+<p><strong><em>Now we can use the API!</em></strong> The first time you try to run a function using the API, you might see a message asking you to “cache” your credentials.</p>
+<p>Select 1 by writing 1 where the cursor is in your bottom-left RStudio Console window and hit enter/return .</p>
+<p><img src="images/cachespot.png" class="img-fluid" style="width:40.0%"></p>
 </section>
 <section id="candidate-danceability-and-valence" class="level3" data-number="11.7.2">
 <h3 data-number="11.7.2" class="anchored" data-anchor-id="candidate-danceability-and-valence"><span class="header-section-number">11.7.2</span> Candidate Danceability and Valence</h3>
-<p>Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to “cache” your credentials.</p>
-<p>Select 1 by writing 1 where the cursor is in your bottom-left RStudio Console window and hit enter/return .</p>
-<p><img src="images/cachespot.png" class="img-fluid" style="width:40.0%"></p>
 <p>We will retrieve the playlists from the candidates by providing the function <code>get_playlist_audio_features()</code> with the Spotify identifiers for each playlist. We store it in a dataframe object called <code>candidates</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>candidates <span class="ot">&lt;-</span> <span class="fu">get_playlist_audio_features</span>(<span class="at">username=</span><span class="st">"Politico"</span>,</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">playlist_uris =</span> <span class="fu">c</span>(<span class="st">"26rVnB3MN03kRyXXWwAne0"</span>, <span class="st">"6gk4Omuze4zSr1G2nK1nQ4"</span>,<span class="st">"2kGJsgdiexWTVlWnTdGSIi"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Note: How do you find the URI if you wanted to on your own? This can be a little tricky. When you are on the web version of Spotify, if you click on the “…” next to the playlist name, artist name, or track name, it provides a menu which includes the “Share” button. By default, the share feature allows you to copy the link to the playlist, a URL. However, this is different from the URI. To get the URI, you can “right-click” on that share button or hold down “control” on a Mac. This will shift it from being the “copy link” to the URI option. See images below to see how holding down “control” after having the menu open shifts the share feature:</p>
+<p><img src="images/spoturl.png" class="img-fluid" style="width:40.0%"> <img src="images/spoturi.png" class="img-fluid" style="width:40.0%"></p>
 <p>Let’s compare the candidates on a few metrics, including danceability (how suitable a track is to dancing from 0 to 1) and valence (musical positiveness from 0 to 1- whether a song is likely to make someone feel happy/cheerful, higher valence, or sad/depressed/angry, lower valence) using a boxplot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(danceability<span class="sc">~</span>playlist_name, <span class="at">data=</span>candidates, <span class="at">horizontal=</span><span class="cn">TRUE</span>, <span class="at">las=</span><span class="dv">1</span>, </span>
@@ -693,17 +708,28 @@ Docs  among
 </div>
 <div class="ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/QXSMEhdMfTU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </section>
-<section id="saving-r-objects" class="level3" data-number="11.7.3">
-<h3 data-number="11.7.3" class="anchored" data-anchor-id="saving-r-objects"><span class="header-section-number">11.7.3</span> Saving R Objects</h3>
+<section id="additional-tools" class="level3" data-number="11.7.3">
+<h3 data-number="11.7.3" class="anchored" data-anchor-id="additional-tools"><span class="header-section-number">11.7.3</span> Additional Tools</h3>
+<p>In addition to analyzing whole playlists, you can also retrieve and analyze specific artists or tracks. Here are a couple examples:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## supply a track URI</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>howdoibreathe_features <span class="ot">&lt;-</span> <span class="fu">get_track_audio_features</span>(<span class="at">id=</span><span class="st">"174rZBKJAqD10VBnOjlQQ3"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## supply an artist name</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>ariana <span class="ot">&lt;-</span> <span class="fu">get_artist_audio_features</span>(<span class="st">'ariana grande'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="saving-r-objects" class="level3" data-number="11.7.4">
+<h3 data-number="11.7.4" class="anchored" data-anchor-id="saving-r-objects"><span class="header-section-number">11.7.4</span> Saving R Objects</h3>
 <p>After you extract data from online, you may want to save them as a hard data file on your computer. This way if you close RStudio, you can reproduce the data.</p>
 <p>R allows you to save any R object as an .RData file that can be opened with the <code>load()</code> command. This is discussed on pg. 24 of QSS <a href="https://assets.press.princeton.edu/chapters/s11025.pdf">Chapter 1</a>.</p>
 <p>We can demonstrate this now by saving <code>candidates</code> as an RData object. It will automatically save to your working directory, but you can also add a subfolder or alternative file path.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(candidates, <span class="at">file =</span> <span class="st">"candidates.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(candidates, <span class="at">file =</span> <span class="st">"candidates.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, you can load the file (if you happen to close R/RStudio, restart your computer, etc.) with the load command.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"candidates.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"candidates.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

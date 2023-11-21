@@ -326,13 +326,23 @@ Sys.setenv(SPOTIFY_CLIENT_SECRET = 'xxxxxxxxxx')
 auth_object <- get_spotify_authorization_code(scope = scopes()[c(7,8,9,10,14,15)])
 ```
 
-### Candidate Danceability and Valence
+Troubleshooting
 
-Now we can use the API! The first time you try to run a function using the API, you might see a message asking you to "cache" your credentials. 
+-   Sometimes people get an error about not having "httpuv" installed. If that happens to you, you can also run `install.packages("httpuv")` and then retry using `library(spotifyr)` and running the setup code.
+-   If you get an error that says "cannot find function", it may mean that `spotifyr` has not been installed or you have not yet run `library(spotifyr)`. Make sure to run these before using the functions below.
+-   If the `Sys.setenv` functions run properly, the first time you use them, they will likely open up a web browser page related to Spotify, asking you to agree to the terms of the API. Once you agree, it will say "Authentication complete." If it does not run properly, it may open a web browser page that says "Invalid login" or something like that.To diagnose that error, I recommend doublechecking that you are
+    -   Signed into Spotify and the developer's Spotify page on the web browser opened via the RStudio session
+    -   That in the Settings page of your Spotify, you have entered the right redirect URI
+    -   That in RStudio, you have entered the correct ClientID and Client Secret without any typos (no extra spaces or accidental "x" left over from when you pasted it)
+    -   After checking these, you can also restart your R session and try again to get a fresh chance of authenticating the API.
+
+***Now we can use the API!*** The first time you try to run a function using the API, you might see a message asking you to "cache" your credentials.
 
 Select 1 by writing 1 where the cursor is in your bottom-left RStudio Console window and hit enter/return .
 
 ![](images/cachespot.png){width="40%"}
+
+### Candidate Danceability and Valence
 
 We will retrieve the playlists from the candidates by providing the function `get_playlist_audio_features()` with the Spotify identifiers for each playlist. We store it in a dataframe object called `candidates`.
 
@@ -340,6 +350,13 @@ We will retrieve the playlists from the candidates by providing the function `ge
 candidates <- get_playlist_audio_features(username="Politico",
                             playlist_uris = c("26rVnB3MN03kRyXXWwAne0", "6gk4Omuze4zSr1G2nK1nQ4","2kGJsgdiexWTVlWnTdGSIi"))
 ```
+
+Note: How do you find the URI if you wanted to on your own? This can be a little tricky. When you are on the web version of Spotify, if you click on the "..." next to the playlist name, artist name, or track name, it provides a menu which includes the "Share" button. By default, the share feature allows you to copy the link to the playlist, a URL. However, this is different from the URI. To get the URI, you can "right-click" on that share button or hold down "control" on a Mac. This will shift it from being the "copy link" to the URI option. See images below to see how holding down "control" after having the menu open shifts the share feature:
+
+![](images/spoturl.png){width=40%} ![](images/spoturi.png){width=40%}
+
+
+
 
 ```{r, echo=FALSE}
 load("data/candidates.RData")
@@ -374,6 +391,20 @@ vivek$track.name[vivek$valence == min(vivek$valence)]
 ```
 
 {{< video src="https://www.youtube.com/watch?v=QXSMEhdMfTU" >}}
+
+
+### Additional Tools
+
+In addition to analyzing whole playlists, you can also retrieve and analyze specific artists or tracks. Here are a couple examples:
+
+```{r}
+## supply a track URI
+howdoibreathe_features <- get_track_audio_features(id="174rZBKJAqD10VBnOjlQQ3")
+
+## supply an artist name
+ariana <- get_artist_audio_features('ariana grande')
+```
+
 
 ### Saving R Objects
 
