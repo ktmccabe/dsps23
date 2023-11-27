@@ -107,7 +107,12 @@ Note: What you might consider non-essential could differ depending on your appli
 
 ```{r}
 ## turn text into corpus
-sotu.corpus <- Corpus(VectorSource(speeches$sotu_text))
+sotu.corpus <- VCorpus(VectorSource(speeches$sotu_text))
+
+## Add meta data into corpus
+meta(sotu.corpus, tag= names(sotu_meta), type="indexed") <- sotu_meta
+meta(sotu.corpus)
+
 ## turn into Document-Term-Matrix
 sotu.dtm <- DocumentTermMatrix(sotu.corpus)
 ```
