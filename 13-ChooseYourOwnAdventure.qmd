@@ -27,7 +27,7 @@ A lot of the data we may encounter in courses has been simplified to allow stude
 
 ```{r, results="asis"}
 nicedata <- data.frame(gender = c("Male", "Female", "Female", "Male"),
-           age = c(16, 20, 66, 44),
+           age = c(18, 20, 66, 44),
            voterturnout = c(1, 0, 1, 0))
 ```
 
@@ -40,7 +40,7 @@ In the real world, our data may hit us like a ton of bricks, like the below:
 
 ```{r, results="asis"}
 uglydata <- data.frame(VV160002 = c(2, NA, 1, 2),
-           VV1400068 = c(16, 20, 66, 44),
+           VV1400068 = c(18, 20, 66, 44),
            VV20000 = c(1, NA, 1, NA))
 ```
 
@@ -124,8 +124,26 @@ uglydata$over65 <- ifelse(uglydata$VV1400068 >=65, 1, 0)
 
 We can also use the `%in%` function to help with this recoding process, like we did in the mapping section.
 
-Suppose we want to code people
+Suppose we want to code people as "milestone age" if they are 18, 21, 40, or 65. We could create a vector of these ages.
 
+```{r}
+milestones <- c(18, 21, 40, 65)
+```
+
+Then, we could indicate "milestone" or "not milestone" depending on if someone's age is in or not in (`! %in%`) that list.
+
+```{r}
+uglydata$milestoneage <- ifelse(uglydata$VV1400068 %in% milestones, "milestone age", "not milestone age")
+
+table(uglydata$milestoneage)
+
+## approach 2
+uglydata$milestoneage <- NA
+uglydata$milestoneage[uglydata$VV1400068 %in% milestones] <- "milestone age"
+uglydata$milestoneage[!(uglydata$VV1400068 %in% milestones)] <-  "not milestone age"
+table(uglydata$milestoneage)
+
+```
 
 ### Dealing with Parts of Datasets
 
