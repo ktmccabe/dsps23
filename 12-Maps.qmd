@@ -222,7 +222,7 @@ ggplot()+
 
 ## Application: Voter Identification Laws
 
-According to the NCSL, 35 states have laws requesting or requiring voters to show some form of identification at the polls.
+According to the NCSL, 36 states have laws requesting or requiring voters to show some form of identification at the polls.
 
 -   The presence of voter ID laws and the strictness of these laws has accelerated over the past decade.
 -   We will look at the geography of these laws to see if there are regional or other political patterns to these
@@ -249,31 +249,28 @@ usmap <- map_data("state")
 
 head(usmap)
 
-## create variable as NA
+## initialize variable
 usmap$photoidlaws <- NA
 
-## Fill in vaariable with state categories
-usmap$photoidlaws[usmap$region %in% c("arkansas","georgia", "indiana", "kansas","mississippi", "tennessee", "wisconsin")] <- "Strict Photo ID"
+usmap$photoidlaws[usmap$region %in% c("arkansas","georgia", "indiana", "kansas",
+                                      "mississippi","missouri", "north carolina", "ohio", 
+                                      "tennessee", "wisconsin")] <- "Strict Photo ID"
 
 usmap$photoidlaws[usmap$region %in% c("alabama", "florida", "idaho", "louisiana", 
                                       "michigan", "montana", "rhode island", "south carolina", 
                                       "south dakota", "texas")] <- "Non-Strict Photo ID"
 
-usmap$photoidlaws[usmap$region %in% c("arizona", "north dakota", 
-                                      "ohio", "wyoming")]<- "Strict Non-Photo ID"
+usmap$photoidlaws[usmap$region %in% c("arizona", "north dakota", "wyoming")]<- "Strict Non-Photo ID"
 
-usmap$photoidlaws[usmap$region %in% c("alaska", "colorado", "connecticut", 
-                                      "delaware", "hawaii", "iowa", "kentucky", "missouri", 
-                                      "new hampshire", "oklahoma", "utah", "virginia", 
-                                      "washington", "west virginia")] <- "Non-Strict Non-Photo ID"
+usmap$photoidlaws[usmap$region %in% c("alaska", "colorado", "connecticut", "delaware", "hawaii", 
+                                      "iowa", "kentucky", "new hampshire", "oklahoma", "utah", 
+                                      "virginia", "washington", "west virginia")] <- "Non-Strict Non-Photo ID"
 
-usmap$photoidlaws[usmap$region %in% c("oregon", "nevada","california", 
-                                      "new mexico", "nebraska", "minnesota", 
-                                      "illinois", "north carolina", "pennsylvania", 
-                                      "new york", "new jersey", "massachusetts",
-                                      "vermont", "maryland", "north carolina", 
-                                      "district of columbia", 
-                                      "maine")] <- "No Document Required"
+usmap$photoidlaws[usmap$region %in% c("oregon", "nevada","california", "new mexico", 
+                                      "nebraska", "minnesota", "illinois",  "pennsylvania", 
+                                      "new york", "new jersey", "massachusetts", "vermont",
+                                      "maryland",  "district of columbia", "maine")] <- "No Document Required"
+
 
 ## Make it a factor categorical variable
 usmap$photoidlaws <- as.factor(usmap$photoidlaws)
@@ -453,7 +450,7 @@ ggplot()+
 anim_save("gtbplot.gif")
 ```
 
-![](gtbplot.gif)
+![](images/gtbplot.gif)
 
 ## Application: Spread of Coronavirus
 
@@ -620,4 +617,4 @@ ggplot()+
 anim_save("syriamap.gif")
 ```
 
-![](syriamap.gif)
+![](images/syriamap.gif)

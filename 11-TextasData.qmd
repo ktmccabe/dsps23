@@ -358,10 +358,7 @@ candidates <- get_playlist_audio_features(username="Politico",
 
 Note: How do you find the URI if you wanted to on your own? This can be a little tricky. When you are on the web version of Spotify, if you click on the "..." next to the playlist name, artist name, or track name, it provides a menu which includes the "Share" button. By default, the share feature allows you to copy the link to the playlist, a URL. However, this is different from the URI. To get the URI, you can "right-click" on that share button or hold down "control" on a Mac. This will shift it from being the "copy link" to the URI option. See images below to see how holding down "control" after having the menu open shifts the share feature:
 
-![](images/spoturl.png){width=40%} ![](images/spoturi.png){width=40%}
-
-
-
+![](images/spoturl.png){width="40%"} ![](images/spoturi.png){width="40%"}
 
 ```{r, echo=FALSE}
 load("data/candidates.RData")
@@ -397,19 +394,17 @@ vivek$track.name[vivek$valence == min(vivek$valence)]
 
 {{< video src="https://www.youtube.com/watch?v=QXSMEhdMfTU" >}}
 
-
 ### Additional Tools
 
 In addition to analyzing whole playlists, you can also retrieve and analyze specific artists or tracks. Here are a couple examples:
 
-```{r}
+```{r, eval=FALSE}
 ## supply a track URI
 howdoibreathe_features <- get_track_audio_features(id="174rZBKJAqD10VBnOjlQQ3")
 
 ## supply an artist name
 ariana <- get_artist_audio_features('ariana grande')
 ```
-
 
 ### Saving R Objects
 

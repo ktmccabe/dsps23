@@ -122,6 +122,11 @@ uglydata$over65[uglydata$VV1400068 < 65] <- 0
 uglydata$over65 <- ifelse(uglydata$VV1400068 >=65, 1, 0)
 ```
 
+We can also use the `%in%` function to help with this recoding process, like we did in the mapping section.
+
+Suppose we want to code people
+
+
 ### Dealing with Parts of Datasets
 
 We may also want to limit our analysis to just small parts of datasets instead of the entire dataset. Recall the function `subset` to limit the data to only rows that meet certain criteria.
@@ -130,6 +135,17 @@ We may also want to limit our analysis to just small parts of datasets instead o
 ## limit data to those over 65
 over65 <- subset(uglydata, over65 == 1)
 ```
+
+We can also trim the dataset to include only certatin columns. There are many ways to do this. Here is one, using our `subset` function with the `select` argument:
+
+```{r}
+## include all rows but only these 2 columns
+onlythesecolumns <- subset(uglydata, 
+                           select = c(gender,
+                                      over65))
+head(onlythesecolumns)
+```
+
 
 ## Where to Go Next
 

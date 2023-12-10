@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./13-ChooseYourOwnAdventure.html" rel="next">
 <link href="./11-TextasData.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -210,6 +211,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./12-Maps.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Mapping</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-ChooseYourOwnAdventure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Choose Your Own Adventure</span></span></a>
   </div>
 </li>
     </ul>
@@ -508,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="application-voter-identification-laws" class="level2" data-number="12.5">
 <h2 data-number="12.5" class="anchored" data-anchor-id="application-voter-identification-laws"><span class="header-section-number">12.5</span> Application: Voter Identification Laws</h2>
-<p>According to the NCSL, 35 states have laws requesting or requiring voters to show some form of identification at the polls.</p>
+<p>According to the NCSL, 36 states have laws requesting or requiring voters to show some form of identification at the polls.</p>
 <ul>
 <li>The presence of voter ID laws and the strictness of these laws has accelerated over the past decade.</li>
 <li>We will look at the geography of these laws to see if there are regional or other political patterns to these</li>
@@ -550,34 +557,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5 -87.57087 30.32665     1     5 alabama      &lt;NA&gt;
 6 -87.58806 30.32665     1     6 alabama      &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create variable as NA</span></span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## initialize variable</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill in vaariable with state categories</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"arkansas"</span>,<span class="st">"georgia"</span>, <span class="st">"indiana"</span>, <span class="st">"kansas"</span>,<span class="st">"mississippi"</span>, <span class="st">"tennessee"</span>, <span class="st">"wisconsin"</span>)] <span class="ot">&lt;-</span> <span class="st">"Strict Photo ID"</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"alabama"</span>, <span class="st">"florida"</span>, <span class="st">"idaho"</span>, <span class="st">"louisiana"</span>, </span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"michigan"</span>, <span class="st">"montana"</span>, <span class="st">"rhode island"</span>, <span class="st">"south carolina"</span>, </span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"south dakota"</span>, <span class="st">"texas"</span>)] <span class="ot">&lt;-</span> <span class="st">"Non-Strict Photo ID"</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"arizona"</span>, <span class="st">"north dakota"</span>, </span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"ohio"</span>, <span class="st">"wyoming"</span>)]<span class="ot">&lt;-</span> <span class="st">"Strict Non-Photo ID"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"arkansas"</span>,<span class="st">"georgia"</span>, <span class="st">"indiana"</span>, <span class="st">"kansas"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"mississippi"</span>,<span class="st">"missouri"</span>, <span class="st">"north carolina"</span>, <span class="st">"ohio"</span>, </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"tennessee"</span>, <span class="st">"wisconsin"</span>)] <span class="ot">&lt;-</span> <span class="st">"Strict Photo ID"</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"alabama"</span>, <span class="st">"florida"</span>, <span class="st">"idaho"</span>, <span class="st">"louisiana"</span>, </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"michigan"</span>, <span class="st">"montana"</span>, <span class="st">"rhode island"</span>, <span class="st">"south carolina"</span>, </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"south dakota"</span>, <span class="st">"texas"</span>)] <span class="ot">&lt;-</span> <span class="st">"Non-Strict Photo ID"</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"arizona"</span>, <span class="st">"north dakota"</span>, <span class="st">"wyoming"</span>)]<span class="ot">&lt;-</span> <span class="st">"Strict Non-Photo ID"</span></span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"alaska"</span>, <span class="st">"colorado"</span>, <span class="st">"connecticut"</span>, </span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"delaware"</span>, <span class="st">"hawaii"</span>, <span class="st">"iowa"</span>, <span class="st">"kentucky"</span>, <span class="st">"missouri"</span>, </span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"new hampshire"</span>, <span class="st">"oklahoma"</span>, <span class="st">"utah"</span>, <span class="st">"virginia"</span>, </span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"washington"</span>, <span class="st">"west virginia"</span>)] <span class="ot">&lt;-</span> <span class="st">"Non-Strict Non-Photo ID"</span></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"oregon"</span>, <span class="st">"nevada"</span>,<span class="st">"california"</span>, </span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"new mexico"</span>, <span class="st">"nebraska"</span>, <span class="st">"minnesota"</span>, </span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"illinois"</span>, <span class="st">"north carolina"</span>, <span class="st">"pennsylvania"</span>, </span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"new york"</span>, <span class="st">"new jersey"</span>, <span class="st">"massachusetts"</span>,</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"vermont"</span>, <span class="st">"maryland"</span>, <span class="st">"north carolina"</span>, </span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"district of columbia"</span>, </span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"maine"</span>)] <span class="ot">&lt;-</span> <span class="st">"No Document Required"</span></span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Make it a factor categorical variable</span></span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(usmap<span class="sc">$</span>photoidlaws)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"alaska"</span>, <span class="st">"colorado"</span>, <span class="st">"connecticut"</span>, <span class="st">"delaware"</span>, <span class="st">"hawaii"</span>, </span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"iowa"</span>, <span class="st">"kentucky"</span>, <span class="st">"new hampshire"</span>, <span class="st">"oklahoma"</span>, <span class="st">"utah"</span>, </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"virginia"</span>, <span class="st">"washington"</span>, <span class="st">"west virginia"</span>)] <span class="ot">&lt;-</span> <span class="st">"Non-Strict Non-Photo ID"</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws[usmap<span class="sc">$</span>region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"oregon"</span>, <span class="st">"nevada"</span>,<span class="st">"california"</span>, <span class="st">"new mexico"</span>, </span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"nebraska"</span>, <span class="st">"minnesota"</span>, <span class="st">"illinois"</span>,  <span class="st">"pennsylvania"</span>, </span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"new york"</span>, <span class="st">"new jersey"</span>, <span class="st">"massachusetts"</span>, <span class="st">"vermont"</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"maryland"</span>,  <span class="st">"district of columbia"</span>, <span class="st">"maine"</span>)] <span class="ot">&lt;-</span> <span class="st">"No Document Required"</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Make it a factor categorical variable</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>usmap<span class="sc">$</span>photoidlaws <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(usmap<span class="sc">$</span>photoidlaws)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s create a map of the U.S. We will then annotate the map with information about voter identification laws.</p>
 <div class="cell">
@@ -748,7 +752,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"gtbplot.gif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="gtbplot.gif" class="img-fluid"></p>
+<p><img src="images/gtbplot.gif" class="img-fluid"></p>
 </section>
 <section id="application-spread-of-coronavirus" class="level2" data-number="12.9">
 <h2 data-number="12.9" class="anchored" data-anchor-id="application-spread-of-coronavirus"><span class="header-section-number">12.9</span> Application: Spread of Coronavirus</h2>
@@ -882,7 +886,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"syriamap.gif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="syriamap.gif" class="img-fluid"></p>
+<p><img src="images/syriamap.gif" class="img-fluid"></p>
 
 
 </section>
@@ -1128,6 +1132,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./13-ChooseYourOwnAdventure.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Choose Your Own Adventure</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -19,6 +19,7 @@ book:
     - 10-Uncertainty.qmd
     - 11-TextasData.qmd
     - 12-Maps.qmd
+    - 13-ChooseYourOwnAdventure.qmd
   page-navigation: true
   downloads: pdf
   sidebar:
